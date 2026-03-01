@@ -6,6 +6,9 @@ namespace src.Domain.ValueObjects;
 
 public sealed class IsiMateri : ValueObject
 {
+    private const int MaxRingkasanLength = 500;
+    private const int MinRingkasanLength = 10;
+
     public Url OriginalFileURL { get; }
 
     public string Ringkasan { get; }
@@ -52,9 +55,13 @@ public sealed class IsiMateri : ValueObject
     public static Result ValidateInvariant(string ringkasan)
     {
         // min 10 karakter dan maks 1000 karakter
-        if (ringkasan.Length < 10 || ringkasan.Length > 1000)
+        if (IsRingkasanLengthOutOfRange(ringkasan))
             return Result.Failure(IsiMateriErrors.InvalidRingkasanCharacterLength());
 
         return Result.Success;
     }
+
+    private static bool IsRingkasanLengthOutOfRange(string ringkasan) =>
+        ringkasan.Length < MinRingkasanLength || ringkasan.Length > MaxRingkasanLength;
+
 }

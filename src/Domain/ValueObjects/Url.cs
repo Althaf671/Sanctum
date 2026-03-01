@@ -5,6 +5,9 @@ namespace src.Domain.ValueObjects;
 
 public sealed class Url : ValueObject
 {
+    private const int MinUrlLength = 8;
+    private const int MaxUrlLength = 2048;
+
     public string Value { get; } 
 
     public override IEnumerable<object> GetAtomicValue()
@@ -13,20 +16,20 @@ public sealed class Url : ValueObject
     }
 
     // Factory
-    public static Result<Url> Create(string urlValue)
+    public static Result<Url> Create(string url)
     {
         // pre-validate
-        if (string.IsNullOrWhiteSpace(urlValue))
+        if (string.IsNullOrWhiteSpace(url))
             return Result<Url>.Failure(UrlErrors.ValueRequired());
 
-        var cleanUrlValue = urlValue.Trim();
+        var trimmedUrl = url.Trim();
 
         // validate invariant
-        var validation = ValidateInvariant(cleanUrlValue);
+        var validation = ValidateInvariant(trimmedUrl);
         if (validation.IsFailure)
             return Result<Url>.Failure(validation.Error);
 
-        return Result<Url>.Success(new Url(cleanUrlValue));
+        return Result<Url>.Success(new Url(trimmedUrl));
     }
 
     // Private constructor
@@ -39,9 +42,12 @@ public sealed class Url : ValueObject
     }
 
     // Validate invariant
-    public static Result ValidateInvariant(string cleanUrlValue)
+    public static Result ValidateInvariant(string trimmedUrl)
     {
-        if (!Uri.TryCreate(cleanUrlValue, UriKind.Absolute, out var uri))
+        if (trimmedUrl.Length < MinUrlLength)
+            return Result.Failure(UrlErrors.InvalidLength()); 
+
+        if (!Uri.TryCreate(trimmedUrl, UriKind.Absolute, out var uri))
             return Result.Failure(UrlErrors.InvalidFormat()); 
 
         // Hanya terima HTTPS
@@ -52,8 +58,8 @@ public sealed class Url : ValueObject
         if (string.IsNullOrWhiteSpace(uri.Host))
             return Result.Failure(UrlErrors.UriHostRequired()); 
 
-        // min length 8 max length 2048 characters
-        if (cleanUrlValue.Length < 8 || cleanUrlValue.Length > 2048)
+        // max length 2048 characters
+        if (trimmedUrl.Length > MaxUrlLength)
             return Result.Failure(UrlErrors.InvalidLength()); 
 
         return Result.Success;

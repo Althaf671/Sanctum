@@ -11,3 +11,9 @@ public enum Semester
     tujuh,
     delapan
 }
+
+public enum SemesterPeriod
+{
+    GANJIL,
+    GENAP
+}

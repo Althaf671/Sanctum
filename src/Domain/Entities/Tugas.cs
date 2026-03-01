@@ -14,6 +14,8 @@ public sealed class Tugas : IEntity
 
     public bool IsTugasDikumpul { get; private set; }
 
+    public bool IsDeleted { get; private set; }
+
     public DateTime? UpdatedAt { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
@@ -45,12 +47,32 @@ public sealed class Tugas : IEntity
     }
 
     // Validate invariant
+    private static Result ValidateInvariant()
+    {
+        return Result.Success; 
+    }
 
-    // RevisiInfoTugas
+    // // RevisiInfoTugas
+    // public Result<Tugas> RevisiInfoTugas()
+    // {
+    //     return Result<Tugas>.Success();
+    // }
 
-    // HapusTugas
+    // // HapusTugas
+    // public Result<Tugas> HapusTugas()
+    // {
+    //     return Result<Tugas>.Success();
+    // }
 
-    // TandaiSudahDikumpul
+    // // TandaiSudahDikumpul
+    // public Result<Tugas> TandaiSudahDikumpul()
+    // {
+    //     return Result<Tugas>.Success();
+    // }
 
-    // TandaiBelumDikumpul
+    // // TandaiBelumDikumpul
+    // public Result<Tugas> TandaiBelumDikumpul()
+    // {
+    //     return Result<Tugas>.Success();
+    //}
 }

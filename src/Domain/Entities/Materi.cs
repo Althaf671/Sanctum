@@ -51,12 +51,32 @@ public sealed class Materi : IEntity
     }
 
     // Validate invariant
+    private static Result ValidateInvariant()
+    {
+        return Result.Success; 
+    }
 
-    // GantiIsiMateri
+    // // GantiIsiMateri
+    // public Result<Materi> GantiIsiMateri()
+    // {
+    //     return Result<Materi>.Success();
+    // }
 
     // RevisiInfoMateri
+    // public Result<Materi> RevisiInfoMateri()
+    // {
+    //     return Result<Materi>.Success();
+    // }
 
     // TandaiSudahDibaca
+    // public Result<Materi> TandaiSudahDibaca()
+    // {
+    //     return Result<Materi>.Success();
+    // }
 
-    // TandaiBelumDibaca
+    // TandaiBelumDibaca    
+    // public Result<Materi> TandaiBelumDibaca()
+    // {
+    //     return Result<Materi>.Success();
+    // }
 }

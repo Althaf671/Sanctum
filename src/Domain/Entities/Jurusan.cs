@@ -40,4 +40,8 @@ public sealed class Jurusan : IAggregateRoot ,IEntity
     }  
 
     // Validate invariant  
+    private static Result ValidateInvariant()
+    {
+        return Result.Success; 
+    }
 }
