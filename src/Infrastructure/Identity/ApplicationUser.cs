@@ -14,5 +14,5 @@ public sealed class ApplicationUser : IdentityUser
 
     public string? SpotifyURL { get; private set; }
 
-    public Semester Semester { get; private set; }
+    public SemesterLevel Semester { get; private set; }
 }

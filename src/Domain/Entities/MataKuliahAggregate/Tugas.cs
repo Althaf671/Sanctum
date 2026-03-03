@@ -1,7 +1,7 @@
 using src.Domain.Common;
 using src.Domain.ValueObjects;
 
-namespace src.Domain.Entities;
+namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed class Tugas : IEntity
 {
     public Guid Id { get; private set; }
@@ -52,27 +52,27 @@ public sealed class Tugas : IEntity
         return Result.Success; 
     }
 
-    // // RevisiInfoTugas
-    // public Result<Tugas> RevisiInfoTugas()
-    // {
-    //     return Result<Tugas>.Success();
-    // }
+    // RevisiInfoTugas
+    internal Result<Tugas> RevisiInfoTugas()
+    {
+        return Result<Tugas>.Success();
+    }
 
-    // // HapusTugas
-    // public Result<Tugas> HapusTugas()
-    // {
-    //     return Result<Tugas>.Success();
-    // }
+    // Hapus Tugas
+    internal Result<Tugas> HapusTugas()
+    {
+        return Result<Tugas>.Success();
+    }
 
-    // // TandaiSudahDikumpul
-    // public Result<Tugas> TandaiSudahDikumpul()
-    // {
-    //     return Result<Tugas>.Success();
-    // }
+    // Tandai tugas Sudah Dikumpul
+    internal Result<Tugas> TandaiTugasSudahDikumpul()
+    {
+        return Result<Tugas>.Success();
+    }
 
-    // // TandaiBelumDikumpul
-    // public Result<Tugas> TandaiBelumDikumpul()
-    // {
-    //     return Result<Tugas>.Success();
-    //}
+    // Tandai tugas Belum Dikumpul
+    internal Result<Tugas> TandaiTugasBelumDikumpul()
+    {
+        return Result<Tugas>.Success();
+    }
 }

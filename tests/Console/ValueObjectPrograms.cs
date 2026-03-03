@@ -74,6 +74,22 @@ internal class ValueObjectsTest
         Console.WriteLine("//===================//");
         Console.WriteLine("");
 
+        Console.Write("Input URL: ");
+        string value = Console.ReadLine()!;
+
+        var url = Url.Create(value);
+        if (url.IsSuccess)
+        {
+            Console.WriteLine("SUCCESS:");
+            Console.WriteLine($"Link URL: {url.Value!.Value}"); 
+        }
+
+        if (url.IsFailure)
+        {
+            Console.WriteLine($"ERROR: {url.Error}");
+            Console.WriteLine("");           
+        }
+
         Console.WriteLine("");
         Console.WriteLine("//======= END =======//");
         Console.WriteLine("");
@@ -87,6 +103,34 @@ internal class ValueObjectsTest
         Console.WriteLine("// Program Input Waktu Kuliah //");
         Console.WriteLine("//============================//");
         Console.WriteLine("");
+
+        Console.Write("Input tanggal kuliah: ");
+        DateOnly tanggalKuliah = DateOnly.Parse(Console.ReadLine()!);
+
+        Console.Write("Input jam mulai kuliah: ");
+        var jamMulaiKuliah = TimeOnly.Parse(Console.ReadLine()!);
+
+        Console.Write("Input jam berakhir kuliah: ");
+        var jamBerakhirKuliah = TimeOnly.Parse(Console.ReadLine()!);
+
+        var waktuKuliahRes = WaktuKuliah.Create(tanggalKuliah, jamMulaiKuliah, jamBerakhirKuliah);
+        if (waktuKuliahRes.IsSuccess)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("SUCCESS:");
+            Console.WriteLine($"Jadwal Kuliah: {waktuKuliahRes.Value!.JamMulai} - {waktuKuliahRes.Value!.JamBerakhir}");
+            Console.WriteLine($"Durasi Perkuliah: {waktuKuliahRes.Value!.Durasi} ({waktuKuliahRes.Value!.Durasi.TotalHours} Jam)"); 
+            Console.WriteLine("");     
+        }
+
+        if (waktuKuliahRes.IsFailure)
+        {
+            Console.WriteLine("");
+            Console.WriteLine($"ERROR: {waktuKuliahRes.Error}");
+            Console.WriteLine("");     
+            return;    
+        }
+
 
         Console.WriteLine("");
         Console.WriteLine("//============ END ===========//");

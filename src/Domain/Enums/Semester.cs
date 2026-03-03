@@ -1,6 +1,6 @@
 namespace src.Domain.Enums;
 
-public enum Semester
+public enum SemesterLevel
 {
     satu,
     dua,

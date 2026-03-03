@@ -1,5 +1,6 @@
 using src.Domain.Common;
 using src.Domain.Errors.ValueObjectErrors;
+using static src.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Domain.ValueObjects;
 
@@ -19,10 +20,10 @@ public sealed class Url : ValueObject
     public static Result<Url> Create(string url)
     {
         // pre-validate
-        if (string.IsNullOrWhiteSpace(url))
+        if (IsBlank(url))
             return Result<Url>.Failure(UrlErrors.ValueRequired());
 
-        var trimmedUrl = url.Trim();
+        var trimmedUrl = TrimEdges(url);
 
         // validate invariant
         var validation = ValidateInvariant(trimmedUrl);
@@ -35,7 +36,7 @@ public sealed class Url : ValueObject
     // Private constructor
     private Url(string cleanUrlValue)
     {
-        if (string.IsNullOrWhiteSpace(cleanUrlValue))
+        if (IsBlank(cleanUrlValue))
             throw new InvalidValueObjectState("IMPOSSIBLE_STATE: value url harus mustahil kosong!");
             
         Value = cleanUrlValue;
@@ -55,7 +56,7 @@ public sealed class Url : ValueObject
             return Result.Failure(UrlErrors.OnlyHttpsAllowed()); 
 
         // Host tidak boleh kosong
-        if (string.IsNullOrWhiteSpace(uri.Host))
+        if (IsBlank(uri.Host))
             return Result.Failure(UrlErrors.UriHostRequired()); 
 
         // max length 2048 characters

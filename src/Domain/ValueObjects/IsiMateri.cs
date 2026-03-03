@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using src.Domain.Common;
 using src.Domain.Errors.ValueObjectErrors;
+using static src.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Domain.ValueObjects;
 
@@ -43,7 +44,7 @@ public sealed class IsiMateri : ValueObject
     private IsiMateri(Url validUrl, string ringkasan)
     {
         var checkValidUrl = validUrl.Value;
-        if (string.IsNullOrWhiteSpace(ringkasan) || string.IsNullOrWhiteSpace(checkValidUrl))
+        if (IsBlank(ringkasan) || IsBlank(checkValidUrl))
             throw new InvalidValueObjectState(
                 "IMPOSSIBLE_STATE: Isi materi ringkasan dan valid url harus mustahil kosong!");
 
@@ -55,13 +56,9 @@ public sealed class IsiMateri : ValueObject
     public static Result ValidateInvariant(string ringkasan)
     {
         // min 10 karakter dan maks 1000 karakter
-        if (IsRingkasanLengthOutOfRange(ringkasan))
+        if (IsStringInputLengthOutOfRange(ringkasan, MinRingkasanLength, MaxRingkasanLength))
             return Result.Failure(IsiMateriErrors.InvalidRingkasanCharacterLength());
 
         return Result.Success;
     }
-
-    private static bool IsRingkasanLengthOutOfRange(string ringkasan) =>
-        ringkasan.Length < MinRingkasanLength || ringkasan.Length > MaxRingkasanLength;
-
 }

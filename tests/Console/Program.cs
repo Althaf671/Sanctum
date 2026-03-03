@@ -5,7 +5,7 @@ using ValueObjectsPrograms;
 //===== Executable Entity Area =====//
 static void RunEntity()
 {
-    EntitiesTest.MataKuliahEntityTest();
+    MataKuliahAggregateEntities.MataKuliahEntityTest();
 };
 // RunEntity();
 
@@ -13,8 +13,10 @@ static void RunEntity()
 //===== Executable Value object Area =====//
 static void RunValueObject()
 {
-    // ValueObjectsTest.IsiMateriValueObjectTest();
+    ValueObjectsTest.IsiMateriValueObjectTest();
     ValueObjectsTest.MasaKuliahValueObjectTest();
+    ValueObjectsTest.UrlValueObjectTest();
+    ValueObjectsTest.WaktuKuliahValueObjectTest();
 };
 RunValueObject();
 

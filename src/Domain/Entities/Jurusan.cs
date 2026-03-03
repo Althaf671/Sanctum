@@ -24,6 +24,9 @@ public sealed class Jurusan : IAggregateRoot ,IEntity
 
     public DateTime CreatedAt { get; private set; } 
 
+    // Foreign key
+
+
     // EF core private constructor
     private Jurusan() { }
 
