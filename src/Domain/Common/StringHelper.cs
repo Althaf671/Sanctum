@@ -6,7 +6,6 @@ public static class StringHelper
     /// This method is a wrapper for isNullOrWhitespace() method.
     /// It's purpose is just to follow ubiqitous language.
     /// </summary>
-    /// <param name="input">it required a string input</param>
     /// <returns>true or false</returns>
     public static bool IsBlank(string input) =>
         string.IsNullOrWhiteSpace(input);
@@ -14,7 +13,6 @@ public static class StringHelper
     /// <summary>
     /// This method is a wrapper for trim() method.
     /// </summary>
-    /// <param name="input">it required a string input</param>
     /// <returns>string without whitespace in the edges of it</returns>
     public static string TrimEdges(string input) =>
         input.Trim();
@@ -22,9 +20,6 @@ public static class StringHelper
     /// <summary>
     /// It will compare is input bigger or smaller than respective limit.
     /// </summary>
-    /// <param name="input"></param>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
     /// <returns>true or false</returns>
     public static bool IsStringInputLengthOutOfRange(string input, int min, int max)
     {
@@ -33,5 +28,11 @@ public static class StringHelper
 
         return input.Length < min || input.Length > max;
     }
-    
+
+    /// <summary>
+    /// It wrap replace method 
+    /// </summary>
+    /// <returns>it will remove any white space inside a string</returns>
+    public static string RemoveWhiteSpace(string input) =>
+        input.Replace(" ", "");
 }

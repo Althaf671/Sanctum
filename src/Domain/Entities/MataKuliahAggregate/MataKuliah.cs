@@ -170,16 +170,16 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         string dosenPengampu)
     {
         if (IsBlank(kodeMataKuliah))
-            return Result.Failure(MataKuliahErrors.ValueRequired("Kode mata kuliah"));
+            return Result.Failure(MataKuliahErrors.ValueRequired("Kode Mata Kuliah"));
 
         if (IsBlank(namaMataKuliah))
-            return Result.Failure(MataKuliahErrors.ValueRequired("Nama mata kuliah"));
+            return Result.Failure(MataKuliahErrors.ValueRequired("Nama Mata Kuliah"));
 
         if (IsBlank(ruangKuliah))
-            return Result.Failure(MataKuliahErrors.ValueRequired("Ruang kuliah"));
+            return Result.Failure(MataKuliahErrors.ValueRequired("Ruang Kuliah"));
 
         if (IsBlank(dosenPengampu))
-            return Result.Failure(MataKuliahErrors.ValueRequired("Dosen pengampu"));
+            return Result.Failure(MataKuliahErrors.ValueRequired("Dosen Pengampu"));
 
         return Result.Success;
     }

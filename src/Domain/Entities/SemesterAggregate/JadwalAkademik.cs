@@ -2,7 +2,7 @@ using src.Domain.Common;
 
 namespace src.Domain.Entities.SemesterAggregate;
 
-public class JadwalAkademik : IEntity
+internal sealed class JadwalAkademik : IEntity
 {
     public Guid Id => throw new NotImplementedException();
 

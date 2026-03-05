@@ -1,5 +1,7 @@
 using src.Domain.Common;
 using src.Domain.Entities;
+using src.Domain.Entities.MataKuliahAggregate;
+using static src.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Domain.Errors.EntityErrors;
 public static class MataKuliahErrors
@@ -9,7 +11,7 @@ public static class MataKuliahErrors
     public static Error ValueRequired(string input)
     {
         return new Error(
-            "MataKuliahErrors.ValueRequired",
+            $"MataKuliahErrors.{RemoveWhiteSpace(input)}Required",
             $"{input} tidak boleh null atau string empty!",
             _domain
         );
@@ -18,7 +20,7 @@ public static class MataKuliahErrors
     public static Error InvalidInputLength(string input)
     {
         return new Error(
-            "MataKuliahErrors.InvalidInputLength",
+            $"MataKuliahErrors.Invalid{RemoveWhiteSpace(input)}Length",
             $"{input} tidak boleh kurang dari 10 atau lebih dari 40 karakter!",
             _domain
         );
@@ -32,4 +34,5 @@ public static class MataKuliahErrors
             _domain       
         );
     }
+
 }
