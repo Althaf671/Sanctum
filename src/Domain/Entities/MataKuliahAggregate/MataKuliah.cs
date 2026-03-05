@@ -4,16 +4,16 @@ using src.Domain.ValueObjects;
 using static src.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Domain.Entities.MataKuliahAggregate;
-public sealed class MataKuliah : IAggregateRoot, IEntity
+public sealed partial class MataKuliah : IAggregateRoot, IEntity
 {
     // Limit constants
-    private const int MinStringInputLength = 10;
+    private const int _minStringInputLength = 10;
 
-    private const int MaxStringInputLength = 40;
+    private const int _maxStringInputLength = 40;
 
-    private const int MinSksInputLength = 1;
+    private const int _minSksInputLength = 1;
 
-    private const int MaxSksInputLength = 3;
+    private const int _maxSksInputLength = 3;
 
 
     // Properties
@@ -46,7 +46,6 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
     // EF core private constructor
     private MataKuliah() { }
 
-
     // Private constructor
     private MataKuliah(
         string kodeMataKuliah,
@@ -67,7 +66,6 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
         LinkFolder = link;
         CreatedAt = DateTime.UtcNow;
     }
-
 
     // Factory
     public static Result<MataKuliah> TambahMataKuliah(
@@ -110,9 +108,9 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
                 waktuKuliah
             ));
     }
-    
 
-    //================= MATA KULIAH AGGREGATE METHODS =================//
+
+    //================= MATA KULIAH METHODS =================//
     // Ganti Waktu Kuliah
     public Result GantiWaktuKuliah(WaktuKuliah waktuKuliah)
     {
@@ -163,95 +161,6 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
     //================= END OF METHODS =================//
 
 
-
-    //================= MATERI CHILD METHODS =================//
-    // Ganti isi materi - ex
-    public Result<Materi> GantiIsiMateri()
-    {
-        var materi = _materi.FirstOrDefault();
-
-        materi.GantiIsiMateri();
-
-        return Result<Materi>.Success();
-    }
-
-    // Revisi info materi - ex
-    public Result<Materi> RevisiInfoMateri()
-    {
-        var newMateriInfo = _materi.FirstOrDefault();
-
-        newMateriInfo.RevisiInfoMateri();
-
-        return Result<Materi>.Success();
-    }
-
-    // Tandai materi sudah dibaca - ex
-    public Result<Materi> TandaiMateriSudahDibaca()
-    {
-        var statusBaca = _materi.FirstOrDefault();
-
-        statusBaca.TandaiMateriSudahDibaca();
-
-        return Result<Materi>.Success();
-    }
-
-    // Tandai materi belum dibaca - ex
-    public Result<Materi> TandaiMateriBelumDibaca()
-    {
-        var statusBaca = _materi.FirstOrDefault();
-
-        statusBaca.TandaiMateriBelumDibaca();
-
-        return Result<Materi>.Success(); 
-    }
-    //================= END OF METHODS =================//
-
-
-
-    //================= TUGAS GRANDCHIDLRED METHODS =================//
-    // Revisi info tugas
-    public Result<Tugas> RevisiInfoTugas()
-    {
-        var materi = _materi.FirstOrDefault();
-
-        tugasInfo.RevisiInfoTugas();
-
-        return Result<Tugas>.Success();
-    }
-
-    // Hapus tugas
-    public Result<Tugas> HapusTugas()
-    {
-        var tugas = _materi.FirstOrDefault();
-
-        tugas.HapusTugas();
-
-        return Result<Tugas>.Success();
-    }
-
-    // Tandai tugas sudah dikumpul
-    public Result<Tugas> TandaiTugasSudahDikumpul()
-    {
-        var statusTugas = _materi.FirstOrDefault();
-
-        statusTugas.TandaiTugasSudahDikumpul();
-
-        return Result<Tugas>.Success();
-    }
-
-    // Tandai tugas belum dikumpul
-    public Result<Tugas> TandaiTugasSudahDikumpul()
-    {
-        var statusTugas = _materi.FirstOrDefault();
-
-        statusTugas.TandaiTugasBelumDikumpul();
-
-        return Result<Tugas>.Success();
-    }
-    //================= END OF METHODS =================//
-
-
-
     //================= MATAKULIAH BEHAVIOUR INVARIANT =================//
     private static Result PreValidation(
         string kodeMataKuliah,
@@ -283,15 +192,15 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
         string dosenPengampu)
     {
         // min and max kode mata kuliah is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(kodeMataKuliah, MinStringInputLength, MaxStringInputLength))
+        if (IsStringInputLengthOutOfRange(kodeMataKuliah, _minStringInputLength, _maxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Kode mata kuliah"));
 
         // min and max nama mata kuliah is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(namaMataKuliah, MinStringInputLength, MaxStringInputLength))
+        if (IsStringInputLengthOutOfRange(namaMataKuliah, _minStringInputLength, _maxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Nama mata kuliah"));
 
         // dosen pengampu min and maks is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(dosenPengampu, MinStringInputLength, MaxStringInputLength))
+        if (IsStringInputLengthOutOfRange(dosenPengampu, _minStringInputLength, _maxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Dosen Pengampu"));
 
         // min and max sks is 1 or 3
@@ -304,5 +213,5 @@ public sealed class MataKuliah : IAggregateRoot, IEntity
 
     // Helper 
     private static bool IsSksInputLengthOutOfRange(int input) =>
-        input < MinSksInputLength || input > MaxSksInputLength;
+        input < _minSksInputLength || input > _maxSksInputLength;
 }

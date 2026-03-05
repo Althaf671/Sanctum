@@ -1,19 +1,27 @@
 using src.Domain.Common;
 using src.Domain.Enums;
+using src.Domain.Errors.EntityErrors;
 using src.Domain.ValueObjects;
+using static src.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed class Materi : IEntity
 {
+    // Limit constants
+    private const int _minPertemuanKeLength = 1;
+
+    private const int _maxPertemuanKeLength = 14;
+
+    // Properties
     public Guid Id { get; private set; }
 
     public string Judul { get; private set; } = string.Empty;
 
     public int PertemuanKe { get; private set; }
 
-    public IsiMateri IsiMateri { get; private set; }
+    public IsiMateri IsiMateri { get; private set; } = null!;
 
-    public TipeMateri TipeMateri { get; private set; }
+    public TipeMateri TipeMateri { get; private set; } 
 
     public bool IsSudahDibaca { get; private set; } = false;
 
@@ -26,7 +34,7 @@ public sealed class Materi : IEntity
     // Backing field 
     public Guid MataKuliahId { get; private set; }
     
-    private MataKuliah _mataKuliah;
+    private MataKuliah _mataKuliah = null!;
 
     public MataKuliah MataKuliah => _mataKuliah;
 
@@ -35,88 +43,154 @@ public sealed class Materi : IEntity
 
     public IReadOnlyCollection<Tugas> Tugas => _tugas.AsReadOnly();
 
+
     // EF core private constructor
     private Materi() { }
 
-    // Factory
-    public static Result<Materi> TambahMateri()
-    {
-        return Result<Materi>.Success(new Materi());
-    }
-
     // Private constructor
-    private Materi(string something)
+    private Materi(
+        string judulMateri,
+        IsiMateri isiMateri,
+        TipeMateri tipeMateri,
+        Guid mataKuliahId,
+        int pertemuanKe)
     {
-        
+        Id = Guid.NewGuid();
+        Judul = judulMateri;
+        IsiMateri = isiMateri;
+        TipeMateri = tipeMateri;
+        MataKuliahId = mataKuliahId;
+        PertemuanKe = pertemuanKe;
+        IsSudahDibaca = false;
+        CreatedAt = DateTime.UtcNow;
     }
 
-    // Validate invariant
-    private static Result ValidateInvariant()
+    // Factory
+    public static Result<Materi> TambahMateri(
+        string judulMateri,
+        IsiMateri isiMateri,
+        TipeMateri tipeMateri,
+        Guid mataKuliahId,
+        int pertemuanKe)
     {
-        return Result.Success; 
+        var validation = ValidateInvariant(judulMateri, pertemuanKe);
+        if (validation.IsFailure)
+            return Result<Materi>.Failure(validation.Error);
+
+        return Result<Materi>.Success(
+            new Materi(
+                judulMateri,
+                isiMateri,
+                tipeMateri,
+                mataKuliahId,
+                pertemuanKe
+            ));
     }
 
-    // // Ganti Isi Materi
-    internal Result<Materi> GantiIsiMateri()
+
+    //================= MATERI METHODS =================//
+    internal Result GantiIsiMateri(IsiMateri isiMateri)
     {
-        return Result<Materi>.Success();
+        IsiMateri = isiMateri;
+        UpdatedAt = DateTime.UtcNow;
+        return Result.Success;
     }
 
-    // Revisi Info Materi
-    internal Result<Materi> RevisiInfoMateri()
+    internal Result RevisiInfoMateri(
+        string judul, 
+        int pertemuanKe,
+        TipeMateri tipeMateri)
     {
-        return Result<Materi>.Success();
+        var validation = ValidateInvariant(judul, pertemuanKe);
+        if (validation.IsFailure)
+            return Result.Failure(validation.Error);
+            
+        Judul = judul;
+        PertemuanKe = pertemuanKe;
+        TipeMateri = tipeMateri;
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Success;
     }
 
-    // Tandai materi Sudah Dibaca
-    internal Result<Materi> TandaiMateriSudahDibaca()
+    internal Result TandaiMateriSudahDibaca()
     {
-        return Result<Materi>.Success();
+        IsSudahDibaca = true;
+        DibacaAt = DateTime.UtcNow;
+        return Result.Success;
+    }
+    //================= END OF METHODS =================//
+
+
+    //================= TUGAS METHODS =================//
+    internal Result RevisiInfoTugas(
+        Guid tugasId,
+        string judulTugas,
+        Url linkPengerjaanTugas,
+        Url linkPengumpulanTugas)
+    {
+        var tugas = _tugas.FirstOrDefault(t => t.Id == tugasId);
+        if (tugas is null)
+            return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
+
+        tugas.RevisiInfoTugas(
+            judulTugas, 
+            linkPengerjaanTugas, 
+            linkPengumpulanTugas);
+
+        return Result.Success;
     }
 
-    // Tandai materi Belum Dibaca    
-    internal Result<Materi> TandaiMateriBelumDibaca()
+    internal Result HapusTugas(Guid tugasId)
     {
-        return Result<Materi>.Success();
-    }
-
-    // Revisi info tugas
-    internal Result<Tugas> RevisiInfoTugas()
-    {
-        var tugas = _tugas.FirstOrDefault();
-
-        tugas.RevisiInfoTugas();
-
-        return Result<Tugas>.Success();
-    }
-
-    // Hapus tugas
-    internal Result<Tugas> HapusTugas()
-    {
-        var tugas = _tugas.FirstOrDefault();
+        var tugas = _tugas.FirstOrDefault(t => t.Id == tugasId);
+        if (tugas is null)
+            return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
 
         tugas.HapusTugas();
 
-        return Result<Tugas>.Success();
+        return Result.Success;
     }
 
-    // Tandai tugas Sudah Dikumpul
-    internal Result<Tugas> TandaiTugasSudahDikumpul()
+    internal Result TandaiTugasSudahDikumpul(Guid tugasId)
     {
-        var statusTugas = _tugas.FirstOrDefault();
+        var tugas = _tugas.FirstOrDefault(t => t.Id == tugasId);
+        if (tugas is null)
+            return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
 
-        statusTugas.TandaiTugasSudahDikumpul();
+        tugas.TandaiTugasSudahDikumpul();
 
-        return Result<Tugas>.Success();
+        return Result.Success;
     }
 
-    // Tandai tugas belum dikumpul
-    internal Result<Tugas> TandaiTugasBelumDikumpul()
+    internal Result TandaiTugasBelumDikumpul(Guid tugasId)
     {
-        var statusBaca = _tugas.FirstOrDefault();
+        var tugas = _tugas.FirstOrDefault(t => t.Id == tugasId);
+        if (tugas is null)
+            return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
 
-        statusBaca.TandaiTugasBelumDikumpul();
+        tugas.TandaiTugasBelumDikumpul();
 
-        return Result<Tugas>.Success();
+        return Result.Success;
     }
+    //================= END OF METHODS =================//
+
+
+    //================= MATERI BEHAVIOUR INVARIANT =================//
+    private static Result ValidateInvariant(string judulMateri, int pertemuanKe)
+    {
+        if (IsBlank(judulMateri))
+            return Result.Failure(MateriErrors.JudulMateriRequired());
+
+        if (IsPertemuanOutOfRange(pertemuanKe))
+            return Result.Failure(MateriErrors.PertemuanOutOfRange());
+
+        return Result.Success; 
+    }
+    //================= END OF METHODS =================//
+
+    // Helper
+    private static bool IsPertemuanOutOfRange(int pertemuanKu) =>
+        pertemuanKu < _minPertemuanKeLength || pertemuanKu > _maxPertemuanKeLength;
+
 }

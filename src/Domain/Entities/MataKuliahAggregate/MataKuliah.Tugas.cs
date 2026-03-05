@@ -1,0 +1,62 @@
+using src.Domain.Common;
+using src.Domain.Errors.EntityErrors;
+using src.Domain.ValueObjects;
+
+// konsep sialan ini disebut Law of Demeter - fahhh - i love it
+namespace src.Domain.Entities.MataKuliahAggregate;
+public sealed partial class MataKuliah
+{
+    public Result RevisiInfoTugas(
+        Guid materiId,
+        Guid tugasId,
+        string judulTugas,
+        Url linkPengerjaanTugas,
+        Url linkPengumpulanTugas)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        materi.RevisiInfoTugas(
+            tugasId,
+            judulTugas,
+            linkPengerjaanTugas,
+            linkPengumpulanTugas
+        );
+
+        return Result.Success;
+    }
+
+    public Result HapusTugas(Guid materiId, Guid tugasId)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        materi.HapusTugas(tugasId);
+
+        return Result.Success;
+    }
+
+    public Result TandaiTugasSudahDikumpul(Guid materiId, Guid tugasId)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        materi.TandaiTugasSudahDikumpul(tugasId);
+
+        return Result.Success;
+    }
+
+    public Result TandaiTugasBelumDikumpul(Guid materiId, Guid tugasId)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        materi.TandaiTugasBelumDikumpul(tugasId);
+
+        return Result.Success;
+    }
+}
