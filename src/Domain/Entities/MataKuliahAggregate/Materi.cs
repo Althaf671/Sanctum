@@ -3,6 +3,7 @@ using src.Domain.Enums;
 using src.Domain.Errors.EntityErrors;
 using src.Domain.ValueObjects;
 using static src.Domain.Common.StringHelper.StringHelper;
+using TugasEntity = src.Domain.Entities.MataKuliahAggregate.Tugas;
 
 namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed class Materi : IEntity
@@ -66,7 +67,7 @@ public sealed class Materi : IEntity
     }
 
     // Factory
-    public static Result<Materi> TambahMateri(
+    internal static Result<Materi> TambahMateri(
         string judulMateri,
         IsiMateri isiMateri,
         TipeMateri tipeMateri,
@@ -123,6 +124,22 @@ public sealed class Materi : IEntity
 
 
     //================= TUGAS METHODS =================//
+    internal Result TambahTugas(
+        string judulTugas, 
+        Url linkPengerjaanTugas, 
+        Url linkPengumpulanTugas)
+    {
+        var newTugas = TugasEntity.TambahTugas(
+            judulTugas, 
+            linkPengerjaanTugas, 
+            linkPengumpulanTugas,
+            Id);
+        if (newTugas.IsFailure)
+            return Result.Failure(newTugas.Error);
+
+        return Result.Success;
+    }
+
     internal Result RevisiInfoTugas(
         Guid tugasId,
         string judulTugas,
@@ -133,10 +150,12 @@ public sealed class Materi : IEntity
         if (tugas is null)
             return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
 
-        tugas.RevisiInfoTugas(
+        var newInfoTugas = tugas.RevisiInfoTugas(
             judulTugas, 
             linkPengerjaanTugas, 
             linkPengumpulanTugas);
+        if (newInfoTugas.IsFailure)
+            return Result.Failure(newInfoTugas.Error);
 
         return Result.Success;
     }

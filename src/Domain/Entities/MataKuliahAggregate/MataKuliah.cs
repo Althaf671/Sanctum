@@ -111,7 +111,6 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
 
     //================= MATA KULIAH METHODS =================//
-    // Ganti Waktu Kuliah
     public Result GantiWaktuKuliah(WaktuKuliah waktuKuliah)
     {
         WaktuKuliah = waktuKuliah;
@@ -119,7 +118,6 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         return Result.Success;
     }
 
-    // Revisi Info Mata Kuliah
     public Result RevisiInfoMataKuliah(
         string kodeMataKuliah,
         string namaMataKuliah,

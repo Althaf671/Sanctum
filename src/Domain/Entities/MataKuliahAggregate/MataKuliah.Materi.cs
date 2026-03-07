@@ -2,10 +2,30 @@ using src.Domain.Common;
 using src.Domain.Enums;
 using src.Domain.Errors.EntityErrors;
 using src.Domain.ValueObjects;
+using MateriEntity = src.Domain.Entities.MataKuliahAggregate.Materi;
 
 namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed partial class MataKuliah
 {
+    public Result TambahMateri(
+        string judulMateri,
+        IsiMateri isiMateri,
+        TipeMateri tipeMateri,
+        int pertemuanKe)
+    {
+        var newMateri = MateriEntity.TambahMateri(
+            judulMateri,
+            isiMateri,
+            tipeMateri,
+            Id,
+            pertemuanKe
+        );
+        if (newMateri.IsFailure)
+            return Result.Failure(newMateri.Error);
+        
+        return Result.Success;
+    }
+
     public Result GantiIsiMateri(Guid materiId, IsiMateri isiMateri)
     {
         var materi = _materi.FirstOrDefault(m => m.Id == materiId);
@@ -27,7 +47,9 @@ public sealed partial class MataKuliah
         if (materi is null)
             return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
 
-        materi.RevisiInfoMateri(judul, pertemuanKe, tipeMateri);
+        var newInfoMateri = materi.RevisiInfoMateri(judul, pertemuanKe, tipeMateri);
+        if (newInfoMateri.IsFailure)
+            return Result.Failure(newInfoMateri.Error);
 
         return Result.Success;
     }

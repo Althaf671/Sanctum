@@ -60,7 +60,7 @@ public sealed class Tugas : IEntity
     }
 
     // Factory
-    public static Result<Tugas> TambahTugas(
+    internal static Result<Tugas> TambahTugas(
         string judulTugas,
         Url linkPengerjaanTugas,
         Url linkPengumpulanTugas,

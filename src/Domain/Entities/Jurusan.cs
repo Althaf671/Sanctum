@@ -8,7 +8,7 @@ namespace src.Domain.Entities;
 
 public sealed class Jurusan : IAggregateRoot ,IEntity
 {
-    // Constants
+    // Constant limits
     private const int _minStringInputLength = 10;
 
     private const int _maxStringInputLength = 30;
@@ -99,7 +99,7 @@ public sealed class Jurusan : IAggregateRoot ,IEntity
         Jenjang = jenjang;
         Akreditasi = akreditasi;
         UpdatedAt = DateTime.UtcNow;
-        
+
         return Result.Success;
     }
 
