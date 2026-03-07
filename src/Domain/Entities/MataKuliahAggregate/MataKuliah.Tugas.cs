@@ -56,7 +56,9 @@ public sealed partial class MataKuliah
         if (materi is null)
             return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
 
-        materi.HapusTugas(tugasId);
+        var deleteTugas = materi.HapusTugas(tugasId);
+        if (deleteTugas.IsFailure)
+            return Result.Failure(deleteTugas.Error);       
 
         return Result.Success;
     }
@@ -67,7 +69,9 @@ public sealed partial class MataKuliah
         if (materi is null)
             return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
 
-        materi.TandaiTugasSudahDikumpul(tugasId);
+        var statusTugas = materi.TandaiTugasSudahDikumpul(tugasId);
+        if (statusTugas.IsFailure)
+            return Result.Failure(statusTugas.Error);
 
         return Result.Success;
     }
@@ -78,7 +82,9 @@ public sealed partial class MataKuliah
         if (materi is null)
             return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
 
-        materi.TandaiTugasBelumDikumpul(tugasId);
+        var statusTugas = materi.TandaiTugasBelumDikumpul(tugasId);
+        if (statusTugas.IsFailure)
+            return Result.Failure(statusTugas.Error);
 
         return Result.Success;
     }

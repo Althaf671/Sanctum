@@ -1,11 +1,12 @@
 using MediatR;
 using src.Domain.Common;
 
+namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
 
-namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMataKuliah;
-
-public record TambahMataKuliahCommand : IRequest<Result>
+public record EditMataKuliah : IRequest<Result>
 {
+    public Guid Id { get; init; }
+
     public string KodeMataKuliah { get; init; } = null!;
 
     public string NamaMataKuliah { get; init; } = null!;
