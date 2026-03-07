@@ -34,7 +34,7 @@ public class JurusanConfiguration : IEntityTypeConfiguration<Jurusan>
             .IsRequired();
 
         builder.Property(j => j.UpdatedAt)
-            .HasColumnType("timestamp with time zone") // for psql to set it as timezone
+            .HasColumnType("timestamp with time zone") // for pgsql to set it as timezone
             .IsRequired(false);
 
         builder.Property(j => j.CreatedAt)

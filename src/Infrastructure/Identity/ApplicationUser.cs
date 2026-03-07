@@ -1,18 +1,19 @@
 using Microsoft.AspNetCore.Identity;
 using src.Domain.Enums;
+using src.Domain.ValueObjects;
 
 namespace src.Infrastructure.Identity;
 public sealed class ApplicationUser : IdentityUser
 {
     public Guid JurusanId { get; private set; }
 
-    public string GithubURL { get; private set; } = string.Empty;
+    public Url GithubURL { get; private set; } = null!;
 
-    public string LinkedinURL { get; private set; } = string.Empty;
+    public Url LinkedinURL { get; private set; } = null!;
 
-    public string? InstagramURL { get; private set; }
+    public Url? InstagramURL { get; private set; }
 
-    public string? SpotifyURL { get; private set; }
+    public Url? SpotifyURL { get; private set; }
 
     public SemesterLevel Semester { get; private set; }
 }
