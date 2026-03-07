@@ -39,6 +39,8 @@ public sealed class WaktuKuliah : ValueObject
             new WaktuKuliah(tanggal, jamMulai, jamBerakhir));
     }
 
+     private WaktuKuliah() { }
+
     // Private constrcutor
     private WaktuKuliah(
         DateOnly tanggal, 

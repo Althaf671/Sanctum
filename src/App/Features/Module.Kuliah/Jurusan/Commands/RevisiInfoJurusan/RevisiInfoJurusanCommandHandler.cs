@@ -1,0 +1,1 @@
+namespace src.App.Features.ModuleKuliah.Jurusan.Commands.RevisiInfoJurusan;

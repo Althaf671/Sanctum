@@ -46,6 +46,8 @@ public sealed class MasaKuliah : ValueObject
         return Result<MasaKuliah>.Success(new MasaKuliah(result.Value.Start, result.Value.End));
     }
 
+    private MasaKuliah() { }
+
     // Private constructor
     private MasaKuliah(DateOnly start, DateOnly end)
     {

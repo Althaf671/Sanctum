@@ -9,7 +9,7 @@ public sealed class Url : ValueObject
     private const int MinUrlLength = 8;
     private const int MaxUrlLength = 2048;
 
-    public string Value { get; } 
+    public string Value { get; } = null!;
 
     public override IEnumerable<object> GetAtomicValue()
     {
@@ -32,6 +32,8 @@ public sealed class Url : ValueObject
 
         return Result<Url>.Success(new Url(trimmedUrl));
     }
+
+     private Url() { }
 
     // Private constructor
     private Url(string cleanUrlValue)

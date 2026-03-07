@@ -37,7 +37,7 @@ public sealed class Semester : IAggregateRoot, IEntity
     }
 
     // Factory
-    public static Result<Semester> Create(MasaKuliah masaKuliah, string tahunAjaran)
+    public static Result<Semester> DaftarkanSemester(MasaKuliah masaKuliah, string tahunAjaran)
     {
         if (IsBlank(tahunAjaran))
             return Result<Semester>.Failure(SemesterErrors.ValueRequired("Tahun Ajaran"));

@@ -42,7 +42,7 @@ public class MateriConfiguraton : IEntityTypeConfiguration<Materi>
             .IsRequired();
 
         builder.Property(m => m.DibacaAt)
-            .HasColumnType("timestamp with time zonee")
+            .HasColumnType("timestamp with time zone")
             .IsRequired(false);
 
         builder.Property(j => j.UpdatedAt)

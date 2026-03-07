@@ -10,9 +10,9 @@ public sealed class IsiMateri : ValueObject
     private const int MaxRingkasanLength = 500;
     private const int MinRingkasanLength = 10;
 
-    public Url OriginalFileURL { get; }
+    public Url OriginalFileURL { get; } = null!;
 
-    public string Ringkasan { get; }
+    public string Ringkasan { get; } = null!;
 
     public override IEnumerable<object> GetAtomicValue()
     {
@@ -39,6 +39,8 @@ public sealed class IsiMateri : ValueObject
 
         return Result<IsiMateri>.Success(new IsiMateri(validUrl.Value!, ringkasan));
     }
+
+    private IsiMateri() { }
 
     // Private constructor
     private IsiMateri(Url validUrl, string ringkasan)
