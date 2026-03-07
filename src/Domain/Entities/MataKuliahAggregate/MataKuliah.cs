@@ -11,9 +11,9 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
     private const int _maxStringInputLength = 40;
 
-    private const int _minSksInputLength = 1;
+    private const int _minSksInput = 1;
 
-    private const int _maxSksInputLength = 3;
+    private const int _maxSksInput = 3;
 
 
     // Properties
@@ -211,5 +211,5 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
     // Helper 
     private static bool IsSksInputLengthOutOfRange(int input) =>
-        input < _minSksInputLength || input > _maxSksInputLength;
+        input < _minSksInput || input > _maxSksInput;
 }
