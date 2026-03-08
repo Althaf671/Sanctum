@@ -1,1 +1,15 @@
+using FluentValidation;
+
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Tugas.HapusTugas;
+
+public class HapusTugasCommandValidator : AbstractValidator<HapusTugasCommand>
+{
+    public HapusTugasCommandValidator()
+    {
+        RuleFor(x => x.MateriId)
+            .NotEmpty();
+
+        RuleFor(x => x.TugasId)
+            .NotEmpty();
+    }
+}

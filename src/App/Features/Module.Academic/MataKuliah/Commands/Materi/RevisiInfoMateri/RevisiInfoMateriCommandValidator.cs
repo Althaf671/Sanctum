@@ -1,1 +1,15 @@
+using FluentValidation;
+
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.RevisiInfoMateri;
+
+public class RevisiInfoMateriCommandValidator : AbstractValidator<RevisiInfoMateriCommand>
+{
+    public RevisiInfoMateriCommandValidator()
+    {
+        RuleFor(x => x.MateriId)
+            .NotEmpty();
+
+        RuleFor(x => x.TipeMateri)
+            .IsInEnum().WithMessage("Pilih salah satu tipe materi!");
+    }
+}

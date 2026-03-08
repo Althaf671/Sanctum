@@ -3,7 +3,7 @@ using src.Domain.Common;
 
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
 
-public record EditMataKuliah : IRequest<Result>
+public record EditMataKuliahCommand : IRequest<Result>
 {
     public Guid Id { get; init; }
 
