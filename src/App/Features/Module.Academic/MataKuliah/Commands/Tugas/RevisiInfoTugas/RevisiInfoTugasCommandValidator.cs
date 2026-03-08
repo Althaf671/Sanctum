@@ -6,6 +6,9 @@ public class RevisiInfoTugasCommandValidator : AbstractValidator<RevisiInfoTugas
 {
     public RevisiInfoTugasCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
 

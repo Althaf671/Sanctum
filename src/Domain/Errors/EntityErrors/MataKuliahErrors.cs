@@ -35,4 +35,12 @@ public static class MataKuliahErrors
         );
     }
 
+    public static Error MataKuliahWithIdNotFound(Guid mataKuliahId)
+    {
+        return new Error(
+            "MataKuliahErrors.MataKuliahWithIdNotFound",
+            $"MataKuliah dengan id: {mataKuliahId} tidak ditemukan.",
+            _domain
+        );
+    }
 }

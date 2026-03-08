@@ -6,6 +6,9 @@ public class RevisiInfoMateriCommandValidator : AbstractValidator<RevisiInfoMate
 {
     public RevisiInfoMateriCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
 

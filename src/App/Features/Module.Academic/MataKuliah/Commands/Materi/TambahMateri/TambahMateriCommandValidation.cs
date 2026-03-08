@@ -6,6 +6,9 @@ public class TambahMateriCommandValidation : AbstractValidator<TambahMateriComma
 {
     public TambahMateriCommandValidation()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.TipeMateri)
             .IsInEnum().WithMessage("Pilih salah satu tipe materi!");
     }

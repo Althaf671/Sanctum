@@ -24,4 +24,13 @@ public static class SemesterErrors
             _domain
         );
     }
+
+    public static Error SemesterWithIdNotFound(Guid semesterId)
+    {
+        return new Error(
+            "SemesterErrors.SemesterWithIdNotFound",
+            $"Semester dengan id: {semesterId} tidak ditemukan.",
+            _domain
+        );
+    }
 }

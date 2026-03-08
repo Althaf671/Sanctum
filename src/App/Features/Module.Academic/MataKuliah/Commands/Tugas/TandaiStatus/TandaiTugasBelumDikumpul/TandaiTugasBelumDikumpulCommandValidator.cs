@@ -6,6 +6,9 @@ public class TandaiTugasBelumDikumpulCommandValidator : AbstractValidator<Tandai
 {
     public TandaiTugasBelumDikumpulCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
 

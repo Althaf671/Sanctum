@@ -5,8 +5,6 @@ using src.Domain.Enums;
 namespace src.App.Features.ModuleKuliah.Jurusan.Commands.DaftarkanJurusan;
 public record DaftarkanJurusanCommand : IRequest<Result>
 {
-    public Guid Id { get; init; }
-
     public string KodeJurusan { get; init; } = null!;
 
     public string NamaJurusan { get; init; } = null!;

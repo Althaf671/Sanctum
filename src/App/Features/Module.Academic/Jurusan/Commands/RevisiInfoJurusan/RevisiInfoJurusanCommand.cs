@@ -2,10 +2,10 @@ using MediatR;
 using src.Domain.Common;
 using src.Domain.Enums;
 
-namespace src.App.Features.ModuleKuliah.Jurusan.Commands.DaftarkanJurusan;
+namespace src.App.Features.ModuleKuliah.Jurusan.Commands.RevisiInfoJurusan;
 public record RevisiInfoJurusanCommand : IRequest<Result>
 {
-    public Guid Id { get; init; }
+    public Guid JurusanId { get; init; }
 
     public string KodeJurusan { get; init; } = null!;
 

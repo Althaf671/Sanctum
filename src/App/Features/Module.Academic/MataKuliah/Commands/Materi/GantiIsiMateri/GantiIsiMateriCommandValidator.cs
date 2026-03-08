@@ -6,6 +6,9 @@ public class GantiIsiMateriCommandValidator : AbstractValidator<GantiIsiMateriCo
 {
     public GantiIsiMateriCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
     }

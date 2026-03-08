@@ -1,10 +1,26 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using src.App.Common.Interfaces;
+using src.Domain.Interfaces;
+using src.Infrastructure.Persistance;
+using src.Infrastructure.Persistance.Repos;
 
 namespace src.Infrastructure;
 public static class InfraDependencyInjection
 {
-    public static IServiceCollection AddInfra(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddScoped<IApplicationDbContext>(provider =>
+            provider.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IMataKuliahRepository, MataKuliahRepository>();
+
         return services;
     }
 }

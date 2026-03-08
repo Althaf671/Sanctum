@@ -5,7 +5,7 @@ namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
 
 public record EditMataKuliahCommand : IRequest<Result>
 {
-    public Guid Id { get; init; }
+    public Guid MataKuliahId { get; init; }
 
     public string KodeMataKuliah { get; init; } = null!;
 

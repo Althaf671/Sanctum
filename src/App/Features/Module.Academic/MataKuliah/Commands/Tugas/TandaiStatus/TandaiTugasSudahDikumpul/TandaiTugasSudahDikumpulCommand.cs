@@ -5,6 +5,8 @@ namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Tugas.TandaiStatus.T
 
 public record TandaiTugasSudahDikumpulCommand : IRequest<Result>
 {
+    public Guid MataKuliahId { get; init; }
+    
     public Guid MateriId { get; init; }
 
     public Guid TugasId { get; init; }

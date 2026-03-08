@@ -7,6 +7,9 @@ public class TandaiMateriSudahDibacaCommandValidator
 {
     public TandaiMateriSudahDibacaCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
     }

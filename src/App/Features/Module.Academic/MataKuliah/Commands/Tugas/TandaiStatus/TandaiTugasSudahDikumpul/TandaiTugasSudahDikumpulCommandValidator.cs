@@ -6,6 +6,9 @@ public class TandaiTugasSudahDikumpulCommandValidator : AbstractValidator<Tandai
 {
     public TandaiTugasSudahDikumpulCommandValidator()
     {
+        RuleFor(x => x.MataKuliahId)
+            .NotEmpty();
+            
         RuleFor(x => x.MateriId)
             .NotEmpty();
 

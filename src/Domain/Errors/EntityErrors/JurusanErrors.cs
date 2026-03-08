@@ -25,4 +25,12 @@ public static class JurusanErrors
         );
     }
 
+    public static Error JurusanWithIdNotFound(Guid jurusanId)
+    {
+        return new Error(
+            "JurusanErrors.JurusanWithIdNotFound",
+            $"Jurusan dengan id: {jurusanId} tidak ditemukan.",
+            _domain
+        );
+    }
 }

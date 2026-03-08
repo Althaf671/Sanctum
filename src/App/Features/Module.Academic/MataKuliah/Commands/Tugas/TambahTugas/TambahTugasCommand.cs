@@ -5,6 +5,8 @@ namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Tugas.TambahTugas;
 
 public record TambahTugasCommand : IRequest<Result>
 {
+    public Guid MataKuliahId { get; init; }
+    
     public Guid MateriId { get; init; }
 
     public string JudulTugas { get; init; } = null!;
