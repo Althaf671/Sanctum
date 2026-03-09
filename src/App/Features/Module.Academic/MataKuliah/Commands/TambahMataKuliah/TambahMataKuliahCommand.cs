@@ -4,7 +4,7 @@ using src.Domain.Common;
 
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMataKuliah;
 
-public record TambahMataKuliahCommand : IRequest<Result>
+public record TambahMataKuliahCommand : IRequest<Result<Guid>>
 {
     public string KodeMataKuliah { get; init; } = null!;
 

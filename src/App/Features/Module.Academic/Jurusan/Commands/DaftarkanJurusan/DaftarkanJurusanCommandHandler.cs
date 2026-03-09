@@ -6,7 +6,7 @@ using JurusanEntity = src.Domain.Entities.Jurusan;
 namespace src.App.Features.ModuleKuliah.Jurusan.Commands.DaftarkanJurusan;
 
 internal sealed class DaftarkanJurusanCommandHandler :
-    IRequestHandler<DaftarkanJurusanCommand, Result>
+    IRequestHandler<DaftarkanJurusanCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -15,7 +15,7 @@ internal sealed class DaftarkanJurusanCommandHandler :
         _dbContext = context;
     }
 
-    public async Task<Result> Handle(DaftarkanJurusanCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(DaftarkanJurusanCommand request, CancellationToken cancellationToken)
     {
         var jurusan = JurusanEntity.DaftarkanJurusan(
             request.KodeJurusan,
@@ -25,11 +25,11 @@ internal sealed class DaftarkanJurusanCommandHandler :
             request.Akreditasi
         );
         if (jurusan.IsFailure)
-            return Result.Failure(jurusan.Error);
+            return Result<Guid>.Failure(jurusan.Error);
 
         await _dbContext.Jurusan.AddAsync(jurusan.Value!, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success;
+        return Result<Guid>.Success(jurusan.Value!.Id);
     }
 }

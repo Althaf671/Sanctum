@@ -7,7 +7,7 @@ using src.Domain.ValueObjects;
 namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed partial class MataKuliah
 {
-    public Result TambahTugas(
+    public Result<Guid> TambahTugas(
         Guid materiId,
         string judulTugas,
         Url linkPengerjaanTugas,
@@ -15,16 +15,16 @@ public sealed partial class MataKuliah
     {
         var materi = _materi.FirstOrDefault(m => m.Id == materiId);
         if (materi is null)
-            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+            return Result<Guid>.Failure(MateriErrors.MateriWithIdNotFound(materiId));
 
         var newTugas = materi.TambahTugas(
             judulTugas,
             linkPengerjaanTugas,
             linkPengumpulanTugas);
         if (newTugas.IsFailure)
-            return Result.Failure(newTugas.Error);
+            return Result<Guid>.Failure(newTugas.Error);
 
-        return Result.Success;
+        return Result<Guid>.Success(newTugas.Value);
     }
 
     public Result RevisiInfoTugas(

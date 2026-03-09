@@ -7,7 +7,7 @@ using SemesterEntity = src.Domain.Entities.SemesterAggregate.Semester;
 namespace src.App.Features.ModuleKuliah.Semester.Commands.DaftarkanSemester;
 
 internal sealed class DaftarkanSemesterCommandHandler
-    : IRequestHandler<DaftarkanSemesterCommand, Result>
+    : IRequestHandler<DaftarkanSemesterCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -16,19 +16,19 @@ internal sealed class DaftarkanSemesterCommandHandler
         _dbContext = context;
     }
 
-    public async Task<Result> Handle(DaftarkanSemesterCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(DaftarkanSemesterCommand request, CancellationToken cancellationToken)
     {
         var masaKuliah = MasaKuliah.Create(request.SemesterPeriod, request.Tahun);
         if (masaKuliah.IsFailure)
-            return Result.Failure(masaKuliah.Error);
+            return Result<Guid>.Failure(masaKuliah.Error);
             
         var semester = SemesterEntity.DaftarkanSemester(masaKuliah.Value!, request.TahunAjaran);
         if (semester.IsFailure)
-            return Result.Failure(semester.Error);
+            return Result<Guid>.Failure(semester.Error);
 
         await _dbContext.Semester.AddAsync(semester.Value!, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success;
+        return Result<Guid>.Success(semester.Value!.Id);
     }
 }

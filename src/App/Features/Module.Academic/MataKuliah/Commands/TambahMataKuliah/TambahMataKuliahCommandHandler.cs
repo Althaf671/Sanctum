@@ -7,7 +7,7 @@ using MataKuliahEntity = src.Domain.Entities.MataKuliahAggregate.MataKuliah;
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMataKuliah;
 
 internal sealed class TambahMataKuliahCommandHandler
-    : IRequestHandler<TambahMataKuliahCommand, Result>
+    : IRequestHandler<TambahMataKuliahCommand, Result<Guid>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -16,18 +16,20 @@ internal sealed class TambahMataKuliahCommandHandler
         _dbContext = context;    
     }
     
-    public async Task<Result> Handle(TambahMataKuliahCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(
+        TambahMataKuliahCommand request, 
+        CancellationToken cancellationToken)
     {
         var url = Url.Create(request.UrlValue);
         if (url.IsFailure)
-            return Result.Failure(url.Error);
+            return Result<Guid>.Failure(url.Error);
 
         var waktuKuliah = WaktuKuliah.Create(
             request.TanggalKuliah, 
             request.JamMulaiKuliah, 
             request.JamBerakhirKuliah);
         if (waktuKuliah.IsFailure)
-            return Result.Failure(waktuKuliah.Error);
+            return Result<Guid>.Failure(waktuKuliah.Error);
 
         var mataKuliah = MataKuliahEntity.TambahMataKuliah(
             request.KodeMataKuliah,
@@ -39,11 +41,11 @@ internal sealed class TambahMataKuliahCommandHandler
             waktuKuliah.Value!
         );
         if (mataKuliah.IsFailure)
-            return Result.Failure(mataKuliah.Error);
+            return Result<Guid>.Failure(mataKuliah.Error);
 
         await _dbContext.MataKuliah.AddAsync(mataKuliah.Value!, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success;
+        return Result<Guid>.Success(mataKuliah.Value!.Id);
     }
 }

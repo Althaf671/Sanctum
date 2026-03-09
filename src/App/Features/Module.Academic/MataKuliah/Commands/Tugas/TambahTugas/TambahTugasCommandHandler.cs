@@ -7,7 +7,7 @@ using src.Domain.ValueObjects;
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Tugas.TambahTugas;
 
 internal sealed class TambahTugasCommandHandler
-    : IRequestHandler<TambahTugasCommand, Result>
+    : IRequestHandler<TambahTugasCommand, Result<Guid>>
 {
     private readonly IMataKuliahRepository _mataKuliahContext;
 
@@ -16,15 +16,15 @@ internal sealed class TambahTugasCommandHandler
         _mataKuliahContext = context;
     }   
 
-    public async Task<Result> Handle(TambahTugasCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(TambahTugasCommand request, CancellationToken cancellationToken)
     {
         var linkPengerjaanTugas = Url.Create(request.UrlLinkPengerjaanTugas);
         if (linkPengerjaanTugas.IsFailure)
-            return Result.Failure(linkPengerjaanTugas.Error);
+            return Result<Guid>.Failure(linkPengerjaanTugas.Error);
 
         var linkPengumpulanTugas = Url.Create(request.UrlLinkPengumpulanTugas);
         if (linkPengumpulanTugas.IsFailure)
-            return Result.Failure(linkPengumpulanTugas.Error);
+            return Result<Guid>.Failure(linkPengumpulanTugas.Error);
 
         var mataKuliah = await _mataKuliahContext.GetWithMateriByIdAsync(
             request.MataKuliahId,
@@ -32,7 +32,8 @@ internal sealed class TambahTugasCommandHandler
             cancellationToken
         );
         if (mataKuliah is null)
-            return Result.Failure(MataKuliahErrors.MataKuliahWithIdNotFound(request.MataKuliahId));
+            return Result<Guid>
+                .Failure(MataKuliahErrors.MataKuliahWithIdNotFound(request.MataKuliahId));
 
         var result = mataKuliah.TambahTugas(
             request.MateriId,
@@ -41,10 +42,10 @@ internal sealed class TambahTugasCommandHandler
             linkPengumpulanTugas.Value!
         );
         if (result.IsFailure)
-            return Result.Failure(result.Error);
+            return Result<Guid>.Failure(result.Error);
 
         await _mataKuliahContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success;
+        return Result<Guid>.Success(result.Value);
     }
 }

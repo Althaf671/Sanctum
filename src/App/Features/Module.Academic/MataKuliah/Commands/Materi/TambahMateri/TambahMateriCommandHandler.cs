@@ -8,7 +8,7 @@ using src.Domain.ValueObjects;
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMateri;
 
 internal sealed class TambahMateriCommandHandler
-    : IRequestHandler<TambahMateriCommand, Result>
+    : IRequestHandler<TambahMateriCommand, Result<Guid>>
 {
     private readonly IMataKuliahRepository _mataKuliahContext;
 
@@ -17,15 +17,15 @@ internal sealed class TambahMateriCommandHandler
         _mataKuliahContext = context;
     }
 
-    public async Task<Result> Handle(TambahMateriCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(TambahMateriCommand request, CancellationToken cancellationToken)
     {
         var isiMateri = IsiMateri.Create(request.OriginalFileUrl, request.RingkasanMateri);
         if (isiMateri.IsFailure)
-            return Result.Failure(isiMateri.Error);
+            return Result<Guid>.Failure(isiMateri.Error);
 
         var mataKuliah = await _mataKuliahContext.GetByIdAsync(request.MataKuliahId, cancellationToken);
         if (mataKuliah is null)
-            return Result.Failure(MataKuliahErrors.MataKuliahWithIdNotFound(request.MataKuliahId));
+            return Result<Guid>.Failure(MataKuliahErrors.MataKuliahWithIdNotFound(request.MataKuliahId));
 
         var result = mataKuliah.TambahMateri(
             request.JudulMateri,
@@ -34,10 +34,10 @@ internal sealed class TambahMateriCommandHandler
             request.PertemuanKe
         );
         if (result.IsFailure)
-            return Result.Failure(result.Error);
+            return Result<Guid>.Failure(result.Error);
 
         await _mataKuliahContext.SaveChangesAsync(cancellationToken);
 
-        return Result.Success;
+        return Result<Guid>.Success(result.Value);
     }
 }

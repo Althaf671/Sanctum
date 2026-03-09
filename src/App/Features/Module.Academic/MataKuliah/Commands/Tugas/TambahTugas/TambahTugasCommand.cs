@@ -3,7 +3,7 @@ using src.Domain.Common;
 
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.Tugas.TambahTugas;
 
-public record TambahTugasCommand : IRequest<Result>
+public record TambahTugasCommand : IRequest<Result<Guid>>
 {
     public Guid MataKuliahId { get; init; }
     

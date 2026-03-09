@@ -3,7 +3,7 @@ using src.Domain.Common;
 using src.Domain.Enums;
 
 namespace src.App.Features.ModuleKuliah.Jurusan.Commands.DaftarkanJurusan;
-public record DaftarkanJurusanCommand : IRequest<Result>
+public record DaftarkanJurusanCommand : IRequest<Result<Guid>>
 {
     public string KodeJurusan { get; init; } = null!;
 

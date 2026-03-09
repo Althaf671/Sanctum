@@ -4,7 +4,7 @@ using src.Domain.Enums;
 
 namespace src.App.Features.ModuleKuliah.Semester.Commands.DaftarkanSemester;
 
-public record DaftarkanSemesterCommand : IRequest<Result>
+public record DaftarkanSemesterCommand : IRequest<Result<Guid>>
 {
     public SemesterPeriod SemesterPeriod { get; init; } 
 

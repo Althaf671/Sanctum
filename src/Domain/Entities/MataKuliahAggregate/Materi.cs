@@ -124,7 +124,7 @@ public sealed class Materi : IEntity
 
 
     //================= TUGAS METHODS =================//
-    internal Result TambahTugas(
+    internal Result<Guid> TambahTugas(
         string judulTugas, 
         Url linkPengerjaanTugas, 
         Url linkPengumpulanTugas)
@@ -135,9 +135,9 @@ public sealed class Materi : IEntity
             linkPengumpulanTugas,
             Id);
         if (newTugas.IsFailure)
-            return Result.Failure(newTugas.Error);
+            return Result<Guid>.Failure(newTugas.Error);
 
-        return Result.Success;
+        return Result<Guid>.Success(newTugas.Value!.Id);
     }
 
     internal Result RevisiInfoTugas(
