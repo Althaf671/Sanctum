@@ -6,7 +6,7 @@ using src.Domain.Common;
 namespace src.App.Features.ModuleKuliah.MataKuliah.Queries.GetMataKuliahMetadataList;
 
 internal sealed class GetMataKuliahMetadataListHandler
-    : IRequestHandler<GetMataKuliahMetadataListQuery, Result<IReadOnlyList<MataKuliahMetadataListDto>>>
+    : IRequestHandler<GetMataKuliahMetadataListQuery, Result<IReadOnlyList<MataKuliahMetadataDto>>>
 {
     private readonly IApplicationDbContext _dbContext;
 
@@ -15,16 +15,22 @@ internal sealed class GetMataKuliahMetadataListHandler
         _dbContext = context;
     }
 
-    public async Task<Result<IReadOnlyList<MataKuliahMetadataListDto>>> Handle(
+    public async Task<Result<IReadOnlyList<MataKuliahMetadataDto>>> Handle(
         GetMataKuliahMetadataListQuery request, 
         CancellationToken cancellationToken)
     {
-        var listMatkulMeta = await _dbContext.MataKuliah
+        var result = await _dbContext.MataKuliah
             .AsNoTracking()
+            .Select(mk => new MataKuliahMetadataDto(
+                mk.Id,
+                mk.KodeMataKuliah,
+                mk.NamaMataKuliah,
+                mk.WaktuKuliah,
+                mk.RuangKuliah
+            ))
             .OrderBy(mk => mk.NamaMataKuliah)
             .ToListAsync(cancellationToken);
         
-        return Result<IReadOnlyList<MataKuliahMetadataListDto>>
-            .Success(listMatkulMeta.Select(MataKuliahMetadataListDto.FromDomain).ToList());
+        return Result<IReadOnlyList<MataKuliahMetadataDto>>.Success(result);
     }
 }

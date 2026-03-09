@@ -40,8 +40,8 @@ public sealed class SemesterController : ControllerBase
             : Ok("Berhasil update info semester");
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> TampilDetailSemester(
+    // [HttpGet("{id}")]
+    // public async Task<IActionResult> TampilDetailSemester(
 
-    )
+    // )
 }
