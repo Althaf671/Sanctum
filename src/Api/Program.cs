@@ -1,3 +1,7 @@
+using Npgsql;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using src.App.DependencyInjection;
 using src.Infrastructure;
 
@@ -8,6 +12,22 @@ builder.Services.AddControllers();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation()
+        .AddNpgsql()
+        .AddOtlpExporter(o => 
+            o.Endpoint = new Uri("http://localhost:4317")))
+    .WithMetrics(m => m
+        .AddAspNetCoreInstrumentation()
+        .AddOtlpExporter(o => 
+            o.Endpoint = new Uri("http://localhost:4317")))
+    .WithLogging(l => l
+        .AddOtlpExporter(o => 
+            o.Endpoint = new Uri("http://localhost:4317")));
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

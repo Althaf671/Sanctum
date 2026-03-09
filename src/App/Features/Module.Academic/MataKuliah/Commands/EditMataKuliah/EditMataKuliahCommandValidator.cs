@@ -6,7 +6,7 @@ public class EditMataKuliahCommandValidator : AbstractValidator<EditMataKuliahCo
 {
     public EditMataKuliahCommandValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(x => x.MataKuliahId)
             .NotEmpty();
     }
 }

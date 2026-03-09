@@ -3,7 +3,6 @@ using src.App.Common.Interfaces;
 using src.Domain.Common;
 using src.Domain.Errors.EntityErrors;
 using src.Domain.ValueObjects;
-using MataKuliahEntity = src.Domain.Entities.MataKuliahAggregate.MataKuliah;
 
 namespace src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
 

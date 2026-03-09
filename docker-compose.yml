@@ -11,5 +11,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  lgtm:
+    image: grafana/otel-lgtm
+    container_name: sanctum_overwatch
+    environment:
+      - GF_PATHS_DATA=/var/lib/grafana
+      - LOKI_RETENTION_PERIOD=24h
+    ports:
+      - "3000:3000"
+      - "4317:4317"
+      - "4318:4318"
+
 volumes:
   postgres_data:

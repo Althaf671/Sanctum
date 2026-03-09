@@ -7,7 +7,7 @@ public class RevisiInfoJurusanCommandValidator : AbstractValidator<RevisiInfoJur
 {
     public RevisiInfoJurusanCommandValidator()
     {
-        RuleFor(x => x.Id)
+        RuleFor(x => x.JurusanId)
             .NotEmpty();
 
         RuleFor(x => x.Jenjang)
