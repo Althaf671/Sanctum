@@ -39,4 +39,9 @@ public sealed class SemesterController : ControllerBase
             ? BadRequest(result.Error)
             : Ok("Berhasil update info semester");
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> TampilDetailSemester(
+
+    )
 }
