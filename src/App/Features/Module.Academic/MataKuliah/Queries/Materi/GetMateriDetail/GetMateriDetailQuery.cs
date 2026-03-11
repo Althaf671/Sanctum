@@ -3,8 +3,5 @@ using src.Domain.Common;
 
 namespace src.App.Features.ModuleKuliah.MataKuliah.Queries.Materi.GetMateriDetail;
 
-public record GetMaterDetailQuery : IRequest<Result<MateriDetailDto>>
-{
-    public Guid MataKuliahId { get; init; }
-    public Guid MateriId { get; init; }
-}
+public record GetMaterDetailQuery(
+    Guid MateriId, Guid MataKuliahId) : IRequest<Result<MateriDetailDto>>;

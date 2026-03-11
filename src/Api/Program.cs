@@ -28,9 +28,15 @@ builder.Services.AddOpenTelemetry()
         .AddOtlpExporter(o => 
             o.Endpoint = new Uri("http://localhost:4317")));
 
+builder.Logging.AddOpenTelemetry(o =>
+{
+    o.IncludeFormattedMessage = true;
+    o.IncludeScopes = true;
+});
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -38,6 +44,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

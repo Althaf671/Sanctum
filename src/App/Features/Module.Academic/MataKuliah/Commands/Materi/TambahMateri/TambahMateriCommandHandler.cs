@@ -11,10 +11,14 @@ internal sealed class TambahMateriCommandHandler
     : IRequestHandler<TambahMateriCommand, Result<Guid>>
 {
     private readonly IMataKuliahRepository _mataKuliahContext;
+    private readonly IApplicationDbContext _dbContext;
 
-    public TambahMateriCommandHandler(IMataKuliahRepository context)
+    public TambahMateriCommandHandler(
+        IMataKuliahRepository context,
+        IApplicationDbContext dbContext)
     {
         _mataKuliahContext = context;
+        _dbContext = dbContext;
     }
 
     public async Task<Result<Guid>> Handle(TambahMateriCommand request, CancellationToken cancellationToken)
@@ -36,8 +40,9 @@ internal sealed class TambahMateriCommandHandler
         if (result.IsFailure)
             return Result<Guid>.Failure(result.Error);
 
+        await _dbContext.Materi.AddAsync(result.Value!);
         await _mataKuliahContext.SaveChangesAsync(cancellationToken);
 
-        return Result<Guid>.Success(result.Value);
+        return Result<Guid>.Success(result.Value!.Id);
     }
 }

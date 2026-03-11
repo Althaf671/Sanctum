@@ -24,10 +24,18 @@ internal sealed class GetMateriByStatusBacaQueryHandler
         var result = await _dbContext.Materi
             .AsNoTracking()
             .Where(m => m.IsSudahDibaca == request.IsSudahDibaca)
+            .Select(m => new MateriMetadataDto(
+                m.MataKuliahId,
+                m.Id,
+                m.Judul,
+                m.TipeMateri,
+                m.IsSudahDibaca
+            ))
             .OrderBy(m => m.Judul)
             .ToListAsync(cancellationToken);
 
         return Result<IReadOnlyList<MateriMetadataDto>>
-            .Success(result.Select(MateriMetadataDto.FromDomain).ToList());
+            .Success(result);
     }
 }
+ 

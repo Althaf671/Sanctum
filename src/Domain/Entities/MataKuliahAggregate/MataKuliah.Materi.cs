@@ -7,7 +7,7 @@ using MateriEntity = src.Domain.Entities.MataKuliahAggregate.Materi;
 namespace src.Domain.Entities.MataKuliahAggregate;
 public sealed partial class MataKuliah
 {
-    public Result<Guid> TambahMateri(
+    public Result<MateriEntity> TambahMateri(
         string judulMateri,
         IsiMateri isiMateri,
         TipeMateri tipeMateri,
@@ -21,9 +21,9 @@ public sealed partial class MataKuliah
             pertemuanKe
         );
         if (newMateri.IsFailure)
-            return Result<Guid>.Failure(newMateri.Error);
+            return Result<MateriEntity>.Failure(newMateri.Error);
         
-        return Result<Guid>.Success(newMateri.Value!.Id);
+        return Result<MateriEntity>.Success(newMateri.Value!);
     }
 
     public Result GantiIsiMateri(Guid materiId, IsiMateri isiMateri)

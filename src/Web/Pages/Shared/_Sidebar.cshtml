@@ -1,0 +1,29 @@
+<div 
+    x-data="{ collapsed: true }"
+    :class="collapsed ? 'sidebar collapsed' : 'sidebar'"
+    class="d-flex flex-column p-3 bg-dark overflow-hidden"
+>
+    <div class="d-flex align-items-center mb-4"
+        :class="collapsed ? 'justify-content-center' : 'justify-content-between'"
+    >
+        <a x-show="!collapsed" href="/" class="navbar-brand text-white">
+            <strong>Sanctum</strong>
+        </a>
+        <button @@click="collapsed = !collapsed" 
+                class="btn btn-sm btn-outline-light">
+            <i class="hgi hgi-stroke hgi-sidebar-right" style="font-size: 20px; font-weight: 500;"></i>
+        </button>
+    </div>
+</div>
+
+<style>
+    .sidebar {
+        width: 225px;
+        transition: width 0.3s ease;
+        min-height: 100vh;
+    }
+
+    .sidebar.collapsed {
+        width: 70px;
+    }
+</style>
