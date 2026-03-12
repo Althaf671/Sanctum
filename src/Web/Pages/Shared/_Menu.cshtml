@@ -1,11 +1,63 @@
-<div class="card menu chart">
-  <div class="card-body">
-    This is some text within a card body.
+<div class="card metric-card px-1 py-2 flex-grow-1">
+  <div class="menu-card-body">
+    <div class="menu-header">
+      <i class="hgi hgi-stroke hgi-discover-circle"></i>
+      <p>Quick Navigations</p>
+    </div>
+    <ol class="menu-body">
+      <a href=""><i class="hgi hgi-stroke hgi-pdf-02"></i>PDF</a>
+      <a href=""><i class="hgi hgi-stroke hgi-online-learning-01"></i>iLearn FTI</a>
+      <a href=""><i class="hgi hgi-stroke hgi-google"></i>Workspace</a>
+      <a href=""><i class="hgi hgi-stroke hgi-settings-02"></i>Settings</a>
+    </ol>
   </div>
 </div>
 
 <style>
-    .menu {
-        width: 32%;
+    .metric-card {
+        position: relative;
+        height: fit-content;
+        border-radius: 20px;
+        padding: 0.55rem;
+        gap: .15em;
+    }
+    .menu-card-body {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+    }
+    .menu-header {
+      display: flex;
+      height: 30px;
+      gap: 0.25rem;
+    }
+    .menu-header i {
+      font-size: 19px;
+    }
+    .menu-body {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      height: 70%;
+      padding: 0;
+    }
+    .menu-body a {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.25rem;
+      width: 48.5%;
+      height: 35px;
+      border: 1px solid black;
+      font-size: 14px;
+      padding: 0 0.25rem 0 0.45rem;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .menu body a i {
+      font-size: 20px;
     }
 </style>

@@ -4,24 +4,44 @@
     ViewData["Title"] = "Home page";
 }
 
+<!-- Header Dashboard -->
+@await Html.PartialAsync("_Header")
+
 <div class="dashboard__content-wrapper d-flex flex-column px-4 py-3">
     @await Html.PartialAsync("_Navbar")
 
-    <div class="metric-card-wrapper d-flex gap-3">
-        @await Html.PartialAsync("_Card")
-        @await Html.PartialAsync("_Card")
-        @await Html.PartialAsync("_Card")
-        @await Html.PartialAsync("_Card")
-    </div>
-
     <div class="chart-and-action-panel-wrapper d-flex justify-content-between d-flex">
         @await Html.PartialAsync("_Chart")
-        @await Html.PartialAsync("_Menu")
+        @await Html.PartialAsync("_LogContainer")
     </div>
+    
+    <div class="lower-dashboard flex-grow-1">
+        <div class="metric-card-wrapper d-flex gap-3">
+            @await Html.PartialAsync("_Card")
+            @await Html.PartialAsync("_Card")
+            @await Html.PartialAsync("_Card")
+        </div>
+        <div class="action-panel">
+            @await Html.PartialAsync("_Menu")
+        </div>
+    </div>
+
 </div>
 
 <style>
     .dashboard__content-wrapper {
+        width: 100%;
         gap: 30px;
+    }
+    .lower-dashboard {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .metric-card-wrapper {
+        width: 65%;
+    }
+    .action-panel {
+        width: 32%;
     }
 </style>

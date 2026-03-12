@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using src.Domain.Enums;
-using src.Domain.ValueObjects;
+using src.Modules.AcademicDomain.Enums;
+using src.SharedKernel.Domain.ValueObjects;
+
 
 namespace src.Infrastructure.Identity;
 public sealed class ApplicationUser : IdentityUser

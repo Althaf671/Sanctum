@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using src.Domain.Entities.SemesterAggregate;
+using src.Modules.AcademicDomain.Entities.SemesterAggregate;
 
 namespace src.Infrastructure.Persistance.Configs;
 

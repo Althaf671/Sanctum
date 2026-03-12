@@ -1,31 +1,36 @@
-﻿using EntitiesProgram;
-using src.Domain.Entities;
-using ValueObjectsPrograms;
+﻿// using EntitiesProgram;
+// using src.Domain.Entities;
+// using ValueObjectsPrograms;
 
-//===== Executable Entity Area =====//
-static void RunEntity()
+// //===== Executable Entity Area =====//
+// static void RunEntity()
+// {
+//     MataKuliahAggregateEntities.MataKuliahEntityTest();
+// };
+// // RunEntity();
+
+
+// //===== Executable Value object Area =====//
+// static void RunValueObject()
+// {
+//     ValueObjectsTest.IsiMateriValueObjectTest();
+//     ValueObjectsTest.MasaKuliahValueObjectTest();
+//     ValueObjectsTest.UrlValueObjectTest();
+//     ValueObjectsTest.WaktuKuliahValueObjectTest();
+// };
+// RunValueObject();
+
+
+// //===== End to End Testing Area =====//
+// static void RunE2ETest()
+// {
+
+// };
+// // RunE2ETest();
+
+
+static void Hello()
 {
-    MataKuliahAggregateEntities.MataKuliahEntityTest();
-};
-// RunEntity();
-
-
-//===== Executable Value object Area =====//
-static void RunValueObject()
-{
-    ValueObjectsTest.IsiMateriValueObjectTest();
-    ValueObjectsTest.MasaKuliahValueObjectTest();
-    ValueObjectsTest.UrlValueObjectTest();
-    ValueObjectsTest.WaktuKuliahValueObjectTest();
-};
-RunValueObject();
-
-
-//===== End to End Testing Area =====//
-static void RunE2ETest()
-{
-
-};
-// RunE2ETest();
-
-
+    Console.WriteLine("Life after refactor");
+}
+Hello();

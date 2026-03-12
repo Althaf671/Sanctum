@@ -1,0 +1,67 @@
+using src.Modules.AcademicDomain.Errors.ValueObjectErrors;
+using src.SharedKernel.Domain.Common;
+using src.SharedKernel.Domain.Exceptions;
+using src.SharedKernel.Domain.ValueObjects;
+using static src.SharedKernel.Domain.Common.StringHelper.StringHelper;
+
+namespace src.Modules.AcademicDomain.ValueObjects;
+
+public sealed class IsiMateri : ValueObject
+{
+    private const int MaxRingkasanLength = 500;
+    private const int MinRingkasanLength = 10;
+
+    public Url OriginalFileURL { get; } = null!;
+
+    public string Ringkasan { get; } = null!;
+
+    public override IEnumerable<object> GetAtomicValue()
+    {
+        yield return OriginalFileURL;
+        yield return Ringkasan;
+    }
+
+    // Factory
+    public static Result<IsiMateri> Create(string originalFileURL, string ringkasan)
+    {   
+        // pre-validation for ringkasan
+        if (string.IsNullOrWhiteSpace(ringkasan))
+            return Result<IsiMateri>.Failure(IsiMateriErrors.RingkasanRequired());
+
+        // validasi url
+        var validUrl = Url.Create(originalFileURL);
+        if (validUrl.IsFailure)
+            return Result<IsiMateri>.Failure(validUrl.Error);
+
+        // validasi invariant - url sudah divalidasi oleh Url 
+        var validation = ValidateInvariant(ringkasan);
+        if (validation.IsFailure)
+            return Result<IsiMateri>.Failure(validation.Error);
+
+        return Result<IsiMateri>.Success(new IsiMateri(validUrl.Value!, ringkasan));
+    }
+
+    private IsiMateri() { }
+
+    // Private constructor
+    private IsiMateri(Url validUrl, string ringkasan)
+    {
+        var checkValidUrl = validUrl.Value;
+        if (IsBlank(ringkasan) || IsBlank(checkValidUrl))
+            throw new InvalidValueObjectState(
+                "IMPOSSIBLE_STATE: Isi materi ringkasan dan valid url harus mustahil kosong!");
+
+        OriginalFileURL = validUrl;
+        Ringkasan = ringkasan;
+    }
+
+    // Validate invariant
+    public static Result ValidateInvariant(string ringkasan)
+    {
+        // min 10 karakter dan maks 1000 karakter
+        if (IsStringInputLengthOutOfRange(ringkasan, MinRingkasanLength, MaxRingkasanLength))
+            return Result.Failure(IsiMateriErrors.InvalidRingkasanCharacterLength());
+
+        return Result.Success;
+    }
+}

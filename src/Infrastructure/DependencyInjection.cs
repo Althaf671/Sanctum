@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using src.App.Common.Interfaces;
-using src.Domain.Interfaces;
+using src.Modules.AcademicDomain.Interfaces;
 using src.Infrastructure.Persistance;
 using src.Infrastructure.Persistance.Repos;
 

@@ -19,12 +19,9 @@
     <PackageReference Include="Npgsql.OpenTelemetry" Version="10.0.1" />
   </ItemGroup>
 
-
-
-
   <ItemGroup>
-    <ProjectReference Include="../App/App.csproj" />
-    <ProjectReference Include="../Domain/Domain.csproj" />
+    <ProjectReference Include="../Modules/Academic/Academic.App/Academic.App.csproj" />
+    <ProjectReference Include="../Modules/Academic/Academic.Domain/Academic.Domain.csproj" />
   </ItemGroup>
 
 </Project>

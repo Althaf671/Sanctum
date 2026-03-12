@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using src.Domain.Entities.MataKuliahAggregate;
-using src.Domain.ValueObjects;
+using src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
+using src.SharedKernel.Domain.ValueObjects;
+
 
 namespace src.Infrastructure.Persistance.Configs;
 

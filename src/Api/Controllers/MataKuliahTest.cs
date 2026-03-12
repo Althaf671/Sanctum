@@ -1,60 +1,60 @@
-using System.Security.Cryptography;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
-using src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMataKuliah;
-using src.App.Features.ModuleKuliah.MataKuliah.Queries.GetMataKuliahDetail;
+// using System.Security.Cryptography;
+// using MediatR;
+// using Microsoft.AspNetCore.Mvc;
+// using src.App.Features.ModuleKuliah.MataKuliah.Commands.EditMataKuliah;
+// using src.App.Features.ModuleKuliah.MataKuliah.Commands.Materi.TambahMataKuliah;
+// using src.App.Features.ModuleKuliah.MataKuliah.Queries.GetMataKuliahDetail;
 
-namespace src.Api.Controllers;
+// namespace src.Api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MatKulController : ControllerBase
-{
-    private readonly ISender _sender;
+// [ApiController]
+// [Route("api/[controller]")]
+// public class MatKulController : ControllerBase
+// {
+//     private readonly ISender _sender;
 
-    public MatKulController(ISender sender)
-    {
-        _sender = sender;
-    }
+//     public MatKulController(ISender sender)
+//     {
+//         _sender = sender;
+//     }
 
-    [HttpPost("Tambah")]
-    public async Task<IActionResult> Tambah(
-        TambahMataKuliahCommand command,
-        CancellationToken cancellationToken)
-    {
-        var res = await _sender.Send(command, cancellationToken);
+//     [HttpPost("Tambah")]
+//     public async Task<IActionResult> Tambah(
+//         TambahMataKuliahCommand command,
+//         CancellationToken cancellationToken)
+//     {
+//         var res = await _sender.Send(command, cancellationToken);
 
-        return res.IsFailure
-            ? BadRequest(res.Error)
-            : Ok($"Berhasil mendaftarkan mata kuliah dengan ID: {res.Value}");
-    }
+//         return res.IsFailure
+//             ? BadRequest(res.Error)
+//             : Ok($"Berhasil mendaftarkan mata kuliah dengan ID: {res.Value}");
+//     }
 
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> TampilkanDetail(
-        Guid id,
-        CancellationToken cancellationToken)
-    {
-        var res = await _sender.Send(
-            new GetMataKuliahDetailQuery(id), cancellationToken);
+//     [HttpGet("{id:guid}")]
+//     public async Task<IActionResult> TampilkanDetail(
+//         Guid id,
+//         CancellationToken cancellationToken)
+//     {
+//         var res = await _sender.Send(
+//             new GetMataKuliahDetailQuery(id), cancellationToken);
 
-        return res.IsFailure
-            ? BadRequest(res.Error)
-            : Ok(res.Value);
-    }
+//         return res.IsFailure
+//             ? BadRequest(res.Error)
+//             : Ok(res.Value);
+//     }
 
-    [HttpPatch("{id:guid}")]
-    public async Task<IActionResult> Edit(
-        Guid id,
-        EditMataKuliahCommand command,
-        CancellationToken cancellationToken)
-    {
-        var res = await _sender.Send(
-            command with { MataKuliahId = id }, cancellationToken
-        );
+//     [HttpPatch("{id:guid}")]
+//     public async Task<IActionResult> Edit(
+//         Guid id,
+//         EditMataKuliahCommand command,
+//         CancellationToken cancellationToken)
+//     {
+//         var res = await _sender.Send(
+//             command with { MataKuliahId = id }, cancellationToken
+//         );
 
-        return res.IsFailure
-            ? BadRequest(res.Error)
-            : Ok ("Berhasil update detail nfo mata kuliah");
-    }
-}
+//         return res.IsFailure
+//             ? BadRequest(res.Error)
+//             : Ok ("Berhasil update detail nfo mata kuliah");
+//     }
+// }

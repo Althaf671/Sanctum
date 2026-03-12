@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using src.Domain.Entities;
+using src.Modules.AcademicDomain.Entities;
 
 namespace src.Infrastructure.Persistance.Configs;
 

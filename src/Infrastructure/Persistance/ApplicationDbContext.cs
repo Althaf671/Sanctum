@@ -2,10 +2,10 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using src.App.Common.Interfaces;
-using src.Domain.Entities;
-using src.Domain.Entities.MataKuliahAggregate;
-using src.Domain.Entities.SemesterAggregate;
 using src.Infrastructure.Identity;
+using src.Modules.AcademicDomain.Entities;
+using src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
+using src.Modules.AcademicDomain.Entities.SemesterAggregate;
 
 namespace src.Infrastructure.Persistance;
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext

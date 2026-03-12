@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using src.Domain.Entities.MataKuliahAggregate;
-using src.Domain.Interfaces;
+using src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
+using src.Modules.AcademicDomain.Interfaces;
 
 namespace src.Infrastructure.Persistance.Repos;
 

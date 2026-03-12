@@ -1,0 +1,34 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Api/Api.csproj" />
+    <Project Path="src/Infrastructure/Infrastructure.csproj" />
+    <Project Path="src/Shared.Kernel/Shared.Kernel.csproj" />
+    <Project Path="src/Web/Web.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+
+  <Folder Name="/src/Modules/Academic/">
+    <Project Path="src/Modules/Academic/Academic.App/Academic.App.csproj" />
+    <Project Path="src/Modules/Academic/Academic.Domain/Academic.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Commission/">
+    <Project Path="src/Modules/Commission/Commission.App/Commission.App.csproj" />
+    <Project Path="src/Modules/Commission/Commission.Domain/Commission.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Finance/">
+    <Project Path="src/Modules/Finance/Finance.App/Finance.App.csproj" />
+    <Project Path="src/Modules/Finance/Finance.Domain/Finance.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Showcase/">
+    <Project Path="src/Modules/Showcase/Showcase.App/Showcase.App.csproj" />
+    <Project Path="src/Modules/Showcase/Showcase.Domain/Showcase.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Workspace/">
+    <Project Path="src/Modules/Workspace/Workspace.App/Workspace.App.csproj" />
+    <Project Path="src/Modules/Workspace/Workspace.Domain/Workspace.Domain.csproj" />
+  </Folder>
+
+  <Folder Name="/tests/">
+    <Project Path="tests/Console/Console.csproj" />
+  </Folder>
+</Solution>

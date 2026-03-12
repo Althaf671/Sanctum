@@ -2,7 +2,6 @@ using Npgsql;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using src.App.DependencyInjection;
 using src.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+// builder.Services.AddApplication();
+// builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddOpenTelemetry()
     .WithTracing(t => t

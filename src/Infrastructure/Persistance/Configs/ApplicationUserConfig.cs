@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using src.Domain.ValueObjects;
 using src.Infrastructure.Identity;
+using src.SharedKernel.Domain.ValueObjects;
 
 namespace src.Infrastructure.Persistance.Configs;
 
@@ -32,7 +32,7 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
 
         builder.Property(u => u.InstagramURL)
             .HasConversion(
-                url => url == null ? null : url.Value,
+                url => url.Value == null ? null : url.Value,
                 value => value == null ? null : Url.Create(value).Value!
             )
             .HasColumnName("LinkInstagram")
@@ -41,7 +41,7 @@ public class ApplicationUserConfig : IEntityTypeConfiguration<ApplicationUser>
 
         builder.Property(u => u.SpotifyURL)
             .HasConversion(
-                url => url == null ? null : url.Value,
+                url => url.Value == null ? null : url.Value,
                 value => value == null ? null : Url.Create(value).Value!
             )
             .HasColumnName("LinkSpotify")
