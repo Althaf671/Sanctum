@@ -1,11 +1,15 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/Api/Api.csproj" />
     <Project Path="src/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/Shared.Kernel/Shared.Kernel.csproj" />
     <Project Path="src/Web/Web.csproj" />
   </Folder>
   <Folder Name="/src/Modules/" />
+
+  <Folder Name"/src/Presentation">
+    <Project Path="src/Presentation/Api/Api.csproj" />
+    <Project Path="src/Presentation/Web/Web.csproj" />
+  </Folder>
 
   <Folder Name="/src/Modules/Academic/">
     <Project Path="src/Modules/Academic/Academic.Application/Academic.App.csproj" />

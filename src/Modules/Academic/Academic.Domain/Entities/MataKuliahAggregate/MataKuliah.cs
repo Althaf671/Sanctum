@@ -44,6 +44,10 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
     public IReadOnlyCollection<Materi> Materi => _materi.AsReadOnly();
 
+    public bool IsDeleted => throw new NotImplementedException();
+
+    DateTime IEntity.UpdatedAt => throw new NotImplementedException();
+
 
     // EF core private constructor
     private MataKuliah() { }
@@ -158,6 +162,11 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
         return Result.Success;
     }
+
+    public Result Delete()
+    {
+        throw new NotImplementedException();
+    }
     //================= END OF METHODS =================//
 
 
@@ -214,4 +223,5 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
     // Helper 
     private static bool IsSksInputLengthOutOfRange(int input) =>
         input < _minSksInput || input > _maxSksInput;
+
 }

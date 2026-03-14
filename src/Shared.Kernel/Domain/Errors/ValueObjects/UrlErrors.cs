@@ -1,7 +1,7 @@
 using src.SharedKernel.Domain.Common;
 using src.SharedKernel.Domain.ValueObjects;
 
-namespace src.Domain.Errors.ValueObjectErrors;
+namespace src.SharedKernel.Errors.ValueObjectErrors;
 public static class UrlErrors
 {
     private static readonly string _domain = nameof(Url);

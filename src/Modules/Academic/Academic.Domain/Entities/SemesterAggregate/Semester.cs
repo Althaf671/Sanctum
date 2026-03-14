@@ -22,6 +22,10 @@ public sealed class Semester : IAggregateRoot, IEntity
 
     public DateTime CreatedAt { get; private set; }
 
+    public bool IsDeleted => throw new NotImplementedException();
+
+    public DateTime UpdatedAt => throw new NotImplementedException();
+
 
     // EF core private constructor
     private Semester() { }
@@ -72,5 +76,10 @@ public sealed class Semester : IAggregateRoot, IEntity
             return Result.Failure(SemesterErrors.InvalidTahunAjaranLength());
 
         return Result.Success;
+    }
+
+    public Result Delete()
+    {
+        throw new NotImplementedException();
     }
 }

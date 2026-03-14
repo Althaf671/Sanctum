@@ -1,4 +1,4 @@
-using src.Domain.Errors.ValueObjectErrors;
+using src.SharedKernel.Errors.ValueObjectErrors;
 using src.SharedKernel.Domain.Common;
 using src.SharedKernel.Domain.Exceptions;
 using static src.SharedKernel.Domain.Common.StringHelper.StringHelper;
@@ -34,7 +34,7 @@ public sealed class Url : ValueObject
         return Result<Url>.Success(new Url(trimmedUrl));
     }
 
-     private Url() { }
+    private Url() { }
 
     // Private constructor
     private Url(string cleanUrlValue)

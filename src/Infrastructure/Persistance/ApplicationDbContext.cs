@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using src.App.Common.Interfaces;
+
 using src.Infrastructure.Identity;
 using src.Modules.AcademicDomain.Entities;
 using src.Modules.AcademicDomain.Entities.MataKuliahAggregate;

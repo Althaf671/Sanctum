@@ -138,5 +138,10 @@ public sealed class Tugas : IEntity
 
         return Result.Success; 
     }
+
+    public Result Delete()
+    {
+        throw new NotImplementedException();
+    }
     //================= END METHODS =================//
 }

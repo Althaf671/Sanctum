@@ -19,6 +19,7 @@ public sealed class Materi : IEntity
 
     public string Judul { get; private set; } = string.Empty;
 
+    // have to delete
     public int PertemuanKe { get; private set; }
 
     public IsiMateri IsiMateri { get; private set; } = null!;
@@ -45,6 +46,7 @@ public sealed class Materi : IEntity
 
     public IReadOnlyCollection<Tugas> Tugas => _tugas.AsReadOnly();
 
+    public bool IsDeleted => throw new NotImplementedException();
 
     // EF core private constructor
     private Materi() { }
@@ -213,4 +215,8 @@ public sealed class Materi : IEntity
     private static bool IsPertemuanOutOfRange(int pertemuanKu) =>
         pertemuanKu < _minPertemuanKeLength || pertemuanKu > _maxPertemuanKeLength;
 
+    public Result Delete()
+    {
+        throw new NotImplementedException();
+    }
 }

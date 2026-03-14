@@ -6,7 +6,7 @@ using static src.SharedKernel.Domain.Common.StringHelper.StringHelper;
 
 namespace src.Modules.AcademicDomain.Entities;
 
-public sealed class Jurusan : IAggregateRoot ,IEntity
+public sealed class Jurusan : IAggregateRoot, IEntity
 {
     // Constant limits
     private const int _minStringInputLength = 10;
@@ -16,20 +16,21 @@ public sealed class Jurusan : IAggregateRoot ,IEntity
     // Properties
     public Guid Id { get; private set; }
 
-    public string KodeJurusan { get; private set; } = string.Empty;
+    public string KodeJurusan { get; private set; } = null!;
 
-    public string NamaJurusan { get; private set; } = string.Empty;
+    public string NamaJurusan { get; private set; } = null!;
 
-    public string NamaFakultas { get; private set; } = string.Empty;
+    public string NamaFakultas { get; private set; } = null!;
 
     public Jenjang Jenjang { get; private set; }
 
     public Akreditasi Akreditasi { get; private set; }
 
+    public bool IsDeleted { get; private set; } = false;
+
     public DateTime? UpdatedAt { get; private set; }
 
-    public DateTime CreatedAt { get; private set; } 
-
+    public DateTime CreatedAt { get; private set; }
 
     // EF core private constructor
     private Jurusan() { }
@@ -98,6 +99,14 @@ public sealed class Jurusan : IAggregateRoot ,IEntity
         NamaFakultas = namaFakultas;
         Jenjang = jenjang;
         Akreditasi = akreditasi;
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Success;
+    }
+
+    public Result Delete()
+    {
+        IsDeleted = true;
         UpdatedAt = DateTime.UtcNow;
 
         return Result.Success;

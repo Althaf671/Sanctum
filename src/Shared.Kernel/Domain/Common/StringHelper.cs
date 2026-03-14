@@ -35,4 +35,8 @@ public static class StringHelper
     /// <returns>it will remove any white space inside a string</returns>
     public static string RemoveWhiteSpace(string input) =>
         input.Replace(" ", "");
+
+    public static string StringfyInput(string input) =>
+        input.ToString();
 }
+
