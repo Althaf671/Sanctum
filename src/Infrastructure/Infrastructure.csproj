@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="../Modules/Academic/Academic.App/Academic.App.csproj" />
     <ProjectReference Include="../Modules/Academic/Academic.Domain/Academic.Domain.csproj" />
+    <ProjectReference Include="../Modules/Tools/Tools.Application/Tools.Application.csproj" />
   </ItemGroup>
 
 </Project>

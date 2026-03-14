@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using src.Modules.Academic.App.Jurusan.Commands.DaftarkanJurusan;
 using src.Modules.Academic.App.Jurusan.Commands.RevisiInfoJurusan;
 using src.Modules.Academic.App.Jurusan.Queries.GetDetailJurusan;
+using Microsoft.AspNetCore.Http;
 
 namespace src.Api.Controllers;
 
@@ -11,6 +12,8 @@ namespace src.Api.Controllers;
 public class JurusanController : ControllerBase
 {
     private readonly ISender _sender;
+    
+    private readonly IFormFile _formFile;
 
     public JurusanController(ISender sender)
     {

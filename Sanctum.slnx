@@ -2,11 +2,9 @@
   <Folder Name="/src/">
     <Project Path="src/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/Shared.Kernel/Shared.Kernel.csproj" />
-    <Project Path="src/Web/Web.csproj" />
   </Folder>
-  <Folder Name="/src/Modules/" />
 
-  <Folder Name"/src/Presentation">
+  <Folder Name="/src/Presentation/">
     <Project Path="src/Presentation/Api/Api.csproj" />
     <Project Path="src/Presentation/Web/Web.csproj" />
   </Folder>
@@ -14,6 +12,9 @@
   <Folder Name="/src/Modules/Academic/">
     <Project Path="src/Modules/Academic/Academic.Application/Academic.App.csproj" />
     <Project Path="src/Modules/Academic/Academic.Domain/Academic.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Tools/">
+    <Project Path="src/Modules/Tools/Tools.Application/Tools.Application.csproj" />
   </Folder>
   <Folder Name="/src/Modules/Commission/">
     <Project Path="src/Modules/Commission/Commission.Application/Commission.App.csproj" />
