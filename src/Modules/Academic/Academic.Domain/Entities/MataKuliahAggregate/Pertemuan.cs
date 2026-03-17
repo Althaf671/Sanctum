@@ -12,6 +12,8 @@ public sealed class Pertemuan : IEntity
 
     public DateTime CreatedAt => throw new NotImplementedException();
 
+    DateTime? IEntity.UpdatedAt => UpdatedAt;
+
     public Result Delete()
     {
         throw new NotImplementedException();

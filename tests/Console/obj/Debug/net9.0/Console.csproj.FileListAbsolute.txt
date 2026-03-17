@@ -1,0 +1,15 @@
+/Users/althaf/Desktop/Sanctum/tests/Console/bin/Debug/net9.0/Console
+/Users/althaf/Desktop/Sanctum/tests/Console/bin/Debug/net9.0/Console.deps.json
+/Users/althaf/Desktop/Sanctum/tests/Console/bin/Debug/net9.0/Console.runtimeconfig.json
+/Users/althaf/Desktop/Sanctum/tests/Console/bin/Debug/net9.0/Console.dll
+/Users/althaf/Desktop/Sanctum/tests/Console/bin/Debug/net9.0/Console.pdb
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.GeneratedMSBuildEditorConfig.editorconfig
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.AssemblyInfoInputs.cache
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.AssemblyInfo.cs
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.csproj.CoreCompileInputs.cache
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.sourcelink.json
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.dll
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/refint/Console.dll
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.pdb
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/Console.genruntimeconfig.cache
+/Users/althaf/Desktop/Sanctum/tests/Console/obj/Debug/net9.0/ref/Console.dll

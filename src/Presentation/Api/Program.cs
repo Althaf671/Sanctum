@@ -1,16 +1,23 @@
+using System.Text.Json.Serialization;
 using Npgsql;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using src.Infrastructure;
+using src.Modules.Tools.ToolsApplication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters
+            .Add(new JsonStringEnumConverter());    
+    });
 
-// builder.Services.AddApplication();
-// builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddToolsApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddOpenTelemetry()
     .WithTracing(t => t

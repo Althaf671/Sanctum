@@ -46,7 +46,7 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
     public bool IsDeleted => throw new NotImplementedException();
 
-    DateTime IEntity.UpdatedAt => throw new NotImplementedException();
+    // DateTime IEntity.UpdatedAt => throw new NotImplementedException();
 
 
     // EF core private constructor

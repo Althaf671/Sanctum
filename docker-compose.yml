@@ -1,4 +1,19 @@
+# TESTING Composer
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sanctum_api
+    ports:
+      - "5163:8080"
+    depends_on:
+      - postgres
+      - lgtm
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings_DefaultConnection=Host=localhost;Port=5432;Database=sanctum;Username=postgres;Password=123test
+      
   postgres:
     image: postgres:17
     container_name: sanctum_db
@@ -21,8 +36,6 @@ services:
       - "3000:3000"
       - "4317:4317"
       - "4318:4318"
-
-    
 
 volumes:
   postgres_data:

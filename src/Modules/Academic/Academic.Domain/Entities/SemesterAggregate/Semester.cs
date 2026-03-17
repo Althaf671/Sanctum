@@ -26,6 +26,8 @@ public sealed class Semester : IAggregateRoot, IEntity
 
     public DateTime UpdatedAt => throw new NotImplementedException();
 
+    DateTime? IEntity.UpdatedAt => UpdatedAt;
+
 
     // EF core private constructor
     private Semester() { }
