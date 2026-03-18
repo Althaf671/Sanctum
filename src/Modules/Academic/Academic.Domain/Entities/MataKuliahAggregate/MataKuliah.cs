@@ -9,44 +9,47 @@ namespace src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
 public sealed partial class MataKuliah : IAggregateRoot, IEntity
 {
     // Limit constants
-    private const int _minStringInputLength = 10;
+    private const int MinStringInputLength = 10;
 
-    private const int _maxStringInputLength = 40;
+    private const int MaxStringInputLength = 40;
 
-    private const int _minSksInput = 1;
+    private const int MinSksInput = 1;
 
-    private const int _maxSksInput = 3;
+    private const int MaxSksInput = 3;
 
 
     // Properties
     public Guid Id { get; private set; }
 
-    public string KodeMataKuliah { get; private set; } = null!;
+    public string KodeMataKuliah { get; private set; } = string.Empty;
 
-    public string NamaMataKuliah { get; private set; } = null!;
+    public string NamaMataKuliah { get; private set; } = string.Empty;
 
     public int Sks { get; private set; }
 
     public WaktuKuliah WaktuKuliah { get; private set; } = null!;
 
-    public string RuangKuliah { get; private set; } = null!;
+    public string RuangKuliah { get; private set; } = string.Empty;
 
-    public string DosenPengampu { get; private set; } = null!;
+    public string DosenPengampu { get; private set; } = string.Empty;
 
     public Url LinkFolder { get; private set; } = null!;
+
+    public bool IsDeleted { get; private set; }
 
     public DateTime? UpdatedAt { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
+    
 
     // One-to-Many with backing field
     private List<Materi> _materi = new();
 
     public IReadOnlyCollection<Materi> Materi => _materi.AsReadOnly();
 
-    public bool IsDeleted => throw new NotImplementedException();
+    private List<Pertemuan> _pertemuan = new();
 
-    // DateTime IEntity.UpdatedAt => throw new NotImplementedException();
+    public IReadOnlyCollection<Pertemuan> Pertemuan => _pertemuan.AsReadOnly();
 
 
     // EF core private constructor
@@ -66,8 +69,11 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         KodeMataKuliah = kodeMataKuliah;
         NamaMataKuliah = namaMataKuliah;
         Sks = sks;
+
         WaktuKuliah = waktuKuliah;
         RuangKuliah = ruangKuliah;
+
+        IsDeleted = false;
         DosenPengampu = dosenPengampu;
         LinkFolder = link;
         CreatedAt = DateTime.UtcNow;
@@ -163,9 +169,12 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         return Result.Success;
     }
 
-    public Result Delete()
+    public Result HapusMataKuliah()
     {
-        throw new NotImplementedException();
+        IsDeleted = true;
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Success;
     }
     //================= END OF METHODS =================//
 
@@ -201,15 +210,15 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         string dosenPengampu)
     {
         // min and max kode mata kuliah is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(kodeMataKuliah, _minStringInputLength, _maxStringInputLength))
+        if (IsStringInputLengthOutOfRange(kodeMataKuliah, MinStringInputLength, MaxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Kode mata kuliah"));
 
         // min and max nama mata kuliah is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(namaMataKuliah, _minStringInputLength, _maxStringInputLength))
+        if (IsStringInputLengthOutOfRange(namaMataKuliah, MinStringInputLength, MaxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Nama mata kuliah"));
 
         // dosen pengampu min and maks is 10 or 40 characters
-        if (IsStringInputLengthOutOfRange(dosenPengampu, _minStringInputLength, _maxStringInputLength))
+        if (IsStringInputLengthOutOfRange(dosenPengampu, MinStringInputLength, MaxStringInputLength))
             return Result.Failure(MataKuliahErrors.InvalidInputLength("Dosen Pengampu"));
 
         // min and max sks is 1 or 3
@@ -222,6 +231,6 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
 
     // Helper 
     private static bool IsSksInputLengthOutOfRange(int input) =>
-        input < _minSksInput || input > _maxSksInput;
+        input < MinSksInput || input > MaxSksInput;
 
 }

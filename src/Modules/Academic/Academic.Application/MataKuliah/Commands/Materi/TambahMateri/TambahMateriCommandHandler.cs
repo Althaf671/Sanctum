@@ -40,7 +40,6 @@ internal sealed class TambahMateriCommandHandler
         if (result.IsFailure)
             return Result<Guid>.Failure(result.Error);
 
-        await _dbContext.Materi.AddAsync(result.Value!);
         await _mataKuliahContext.SaveChangesAsync(cancellationToken);
 
         return Result<Guid>.Success(result.Value!.Id);

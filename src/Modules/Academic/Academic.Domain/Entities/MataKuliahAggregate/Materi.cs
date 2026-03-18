@@ -19,7 +19,6 @@ public sealed class Materi : IEntity
 
     public string Judul { get; private set; } = string.Empty;
 
-    // have to delete
     public int PertemuanKe { get; private set; }
 
     public IsiMateri IsiMateri { get; private set; } = null!;
@@ -30,23 +29,19 @@ public sealed class Materi : IEntity
 
     public DateTime? DibacaAt { get; private set; }
 
+    public bool IsDeleted { get; private set; }
+
     public DateTime? UpdatedAt { get; private set; }
 
     public DateTime CreatedAt { get; private set; } 
 
-    // Backing field 
+    // Fk to parent
     public Guid MataKuliahId { get; private set; }
-    
-    private MataKuliah _mataKuliah = null!;
-
-    public MataKuliah MataKuliah => _mataKuliah;
 
     // One-to-many backing field
-    private List<Tugas> _tugas = new();
+    private List<TugasEntity> _tugas = new();
 
-    public IReadOnlyCollection<Tugas> Tugas => _tugas.AsReadOnly();
-
-    public bool IsDeleted => throw new NotImplementedException();
+    public IReadOnlyCollection<TugasEntity> Tugas => _tugas.AsReadOnly();
 
     // EF core private constructor
     private Materi() { }
@@ -63,8 +58,10 @@ public sealed class Materi : IEntity
         Judul = judulMateri;
         IsiMateri = isiMateri;
         TipeMateri = tipeMateri;
-        MataKuliahId = mataKuliahId;
         PertemuanKe = pertemuanKe;
+
+        MataKuliahId = mataKuliahId;
+        IsDeleted = false;
         IsSudahDibaca = false;
         CreatedAt = DateTime.UtcNow;
     }
@@ -121,6 +118,14 @@ public sealed class Materi : IEntity
     {
         IsSudahDibaca = true;
         DibacaAt = DateTime.UtcNow;
+        return Result.Success;
+    }
+
+    internal Result HapusMateri()
+    {
+        IsDeleted = false;
+        UpdatedAt = DateTime.UtcNow;
+        
         return Result.Success;
     }
     //================= END OF METHODS =================//
@@ -214,9 +219,4 @@ public sealed class Materi : IEntity
     // Helper
     private static bool IsPertemuanOutOfRange(int pertemuanKu) =>
         pertemuanKu < _minPertemuanKeLength || pertemuanKu > _maxPertemuanKeLength;
-
-    public Result Delete()
-    {
-        throw new NotImplementedException();
-    }
 }

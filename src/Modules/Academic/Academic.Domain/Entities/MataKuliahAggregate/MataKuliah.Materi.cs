@@ -22,6 +22,8 @@ public sealed partial class MataKuliah
         );
         if (newMateri.IsFailure)
             return Result<MateriEntity>.Failure(newMateri.Error);
+
+        _materi.Add(newMateri.Value!);
         
         return Result<MateriEntity>.Success(newMateri.Value!);
     }
