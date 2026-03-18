@@ -8,6 +8,7 @@
     <Project Path="src/Presentation/Api/Api.csproj" />
     <Project Path="src/Presentation/Web/Web.csproj" />
   </Folder>
+  <Folder Name="/src/Modules/" />
 
   <Folder Name="/src/Modules/Academic/">
     <Project Path="src/Modules/Academic/Academic.Application/Academic.App.csproj" />
@@ -35,5 +36,8 @@
 
   <Folder Name="/tests/">
     <Project Path="tests/Console/Console.csproj" />
+  </Folder>
+  <Folder Name="/tests/DomainTests/">
+    <Project Path="tests/DomainTests/DomainTest.Academic/DomainTest.Academic.csproj" />
   </Folder>
 </Solution>

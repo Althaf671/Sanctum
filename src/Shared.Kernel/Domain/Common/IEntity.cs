@@ -8,6 +8,4 @@ public interface IEntity
     DateTime? UpdatedAt { get; }
 
     DateTime CreatedAt { get; }
-
-    public Result Delete();
 }

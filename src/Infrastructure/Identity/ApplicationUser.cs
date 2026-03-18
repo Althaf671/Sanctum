@@ -4,7 +4,7 @@ using src.SharedKernel.Domain.ValueObjects;
 
 
 namespace src.Infrastructure.Identity;
-public sealed class ApplicationUser : IdentityUser
+public sealed class ApplicationUser : IdentityUser<Guid>
 {
     public Guid JurusanId { get; private set; }
 
