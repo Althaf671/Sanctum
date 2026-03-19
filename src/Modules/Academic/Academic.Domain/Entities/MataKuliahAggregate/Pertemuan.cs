@@ -42,7 +42,7 @@ public sealed class Pertemuan : IEntity
         CreatedAt = DateTime.UtcNow;
     }
 
-    internal static Result<Pertemuan> DaftarkanPertemuan(
+    internal static Result<Pertemuan> JadwalkanPertemuan(
         int pertemuanKe,
         DateOnly tanggal,
         Guid mataKuliahId)

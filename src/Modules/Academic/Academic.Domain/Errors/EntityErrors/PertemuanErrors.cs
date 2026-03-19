@@ -24,4 +24,22 @@ public static class PertemuanErrors
             _domain
         );
     }
+
+    public static Error PertemuanSudahAda()
+    {
+        return new Error(
+            "PertemuanErrors.PertemuanSudahAda",
+            "Pertemuan ke sudah ada dan tidak boleh ada duplikat",
+            _domain
+        );
+    }
+
+    public static Error PertemuanWithIdNotFound(Guid pertemuanId)
+    {
+        return new Error(
+            "PertemuanErrors.PertemuanWithIdNotFound",
+            $"Pertemuan dengan id: {pertemuanId} tidak ditemukan.",
+            _domain
+        );
+    }
 }

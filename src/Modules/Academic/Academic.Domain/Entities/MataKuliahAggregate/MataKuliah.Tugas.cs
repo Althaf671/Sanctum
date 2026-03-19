@@ -1,4 +1,5 @@
 using src.Modules.AcademicDomain.Errors.EntityErrors;
+using src.Modules.AcademicDomain.ValueObjects;
 using src.SharedKernel.Domain.Common;
 using src.SharedKernel.Domain.ValueObjects;
 
@@ -10,7 +11,8 @@ public sealed partial class MataKuliah
         Guid materiId,
         string judulTugas,
         Url linkPengerjaanTugas,
-        Url linkPengumpulanTugas)
+        Url linkPengumpulanTugas,
+        Deadline deadline)
     {
         var materi = _materi.FirstOrDefault(m => m.Id == materiId);
         if (materi is null)
@@ -19,7 +21,8 @@ public sealed partial class MataKuliah
         var newTugas = materi.TambahTugas(
             judulTugas,
             linkPengerjaanTugas,
-            linkPengumpulanTugas);
+            linkPengumpulanTugas,
+            deadline);
         if (newTugas.IsFailure)
             return Result<Guid>.Failure(newTugas.Error);
 
@@ -45,6 +48,19 @@ public sealed partial class MataKuliah
         );
         if (newInfoTugas.IsFailure)
             return Result.Failure(newInfoTugas.Error);
+
+        return Result.Success;
+    }
+
+    public Result TugasJatuhTempo(Guid materiId, Guid tugasId, Deadline deadline)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        var jatuhTempo = materi.TugasJatuhTempo(tugasId, deadline);
+        if (jatuhTempo.IsFailure)
+            return Result.Failure(jatuhTempo.Error);   
 
         return Result.Success;
     }

@@ -42,4 +42,13 @@ public static class MataKuliahErrors
             _domain
         );
     }
+
+    public static Error UserNotFound()
+    {
+        return new Error(
+            "MataKuliahErrors.UserNotFound",
+            "User dengan ID ini tidak ditemukan",
+            _domain
+        );
+    }
 }

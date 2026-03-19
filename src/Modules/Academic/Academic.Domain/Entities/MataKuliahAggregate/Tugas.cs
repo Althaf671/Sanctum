@@ -1,4 +1,5 @@
 using src.Modules.AcademicDomain.Errors.EntityErrors;
+using src.Modules.AcademicDomain.ValueObjects;
 using src.SharedKernel.Domain.Common;
 using src.SharedKernel.Domain.ValueObjects;
 using static src.SharedKernel.Domain.Common.StringHelper.StringHelper;
@@ -7,19 +8,21 @@ namespace src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
 public sealed class Tugas : IEntity
 {
     // Limit constants
-    private const int _minJudulLength = 5;
+    private const int MinJudulLength = 5;
 
-    private const int _maxJudulLength = 30;
+    private const int MaxJudulLength = 30;
     
 
     // Properties
     public Guid Id { get; private set; }
 
-    public string JudulTugas { get; private set; } = null!;
+    public string JudulTugas { get; private set; } =string.Empty;
 
     public Url LinkPengerjaanTugas { get; private set; } = null!;
 
     public Url LinkPengumpulanTugas { get; private set; } = null!;
+
+    public Deadline? Deadline { get; private set; } 
 
     public bool IsTugasDikumpul { get; private set; }
 
@@ -31,13 +34,6 @@ public sealed class Tugas : IEntity
 
     public Guid MateriId { get; private set; }
 
-
-    // Backing field 
-    private Materi _materi = null!;
-
-    public Materi Materi => _materi;
-
-
     // EF core private constructor
     private Tugas() { }
 
@@ -47,14 +43,18 @@ public sealed class Tugas : IEntity
         string judulTugas,
         Url linkPengerjaanTugas,
         Url linkPengumpulanTugas,
+        Deadline deadline,
         Guid materiId)
     {
         Id = Guid.NewGuid();
+        JudulTugas = judulTugas;
         LinkPengerjaanTugas = linkPengerjaanTugas;
         LinkPengumpulanTugas = linkPengumpulanTugas;
-        JudulTugas = judulTugas;
+
         IsTugasDikumpul = false;
+        Deadline = deadline;
         IsDeleted = false;
+
         CreatedAt = DateTime.UtcNow;
         MateriId = materiId;
     }
@@ -64,7 +64,8 @@ public sealed class Tugas : IEntity
         string judulTugas,
         Url linkPengerjaanTugas,
         Url linkPengumpulanTugas,
-        Guid materiId)
+        Guid materiId,
+        Deadline deadline)
     {
         // pre-validate
         if (IsBlank(judulTugas))
@@ -79,8 +80,9 @@ public sealed class Tugas : IEntity
 
         return Result<Tugas>.Success(new Tugas(
             cleanJudulTugas,
-            linkPengumpulanTugas,
             linkPengerjaanTugas, 
+            linkPengumpulanTugas,
+            deadline,
             materiId
         ));
     }
@@ -103,9 +105,18 @@ public sealed class Tugas : IEntity
         if (validation.IsFailure)
             return Result.Failure(validation.Error);
 
-        JudulTugas = judulTugas;
+        JudulTugas = cleanJudulTugas;
         LinkPengerjaanTugas = linkPengerjaanTugas;
         LinkPengumpulanTugas = linkPengumpulanTugas;
+        UpdatedAt = DateTime.UtcNow;
+
+        return Result.Success;
+    }
+
+    internal Result TugasJatuhTempo(Deadline deadline)
+    {
+        Deadline = deadline;
+        UpdatedAt = DateTime.UtcNow;
 
         return Result.Success;
     }
@@ -113,18 +124,24 @@ public sealed class Tugas : IEntity
     internal Result HapusTugas()
     {
         IsDeleted = true;
+        UpdatedAt = DateTime.UtcNow;
+
         return Result.Success;
     }
 
     internal Result TandaiTugasSudahDikumpul()
     {
         IsTugasDikumpul = true;
+        UpdatedAt = DateTime.UtcNow;
+
         return Result.Success;
     }
 
     internal Result TandaiTugasBelumDikumpul()
     {
         IsTugasDikumpul = false;
+        UpdatedAt = DateTime.UtcNow;
+
         return Result.Success;
     }
     //================= END METHODS =================//
@@ -133,15 +150,10 @@ public sealed class Tugas : IEntity
     //================= TUGAS BEHAVIOUR INVARIANT =================//
     private static Result ValidateInvariant(string cleanJudulTugas)
     {
-        if (IsStringInputLengthOutOfRange(cleanJudulTugas, _minJudulLength, _maxJudulLength))
+        if (IsStringInputLengthOutOfRange(cleanJudulTugas, MinJudulLength, MaxJudulLength))
             return Result.Failure(TugasErrors.JudulTugasLengthOutOfRange());
 
         return Result.Success; 
-    }
-
-    public Result Delete()
-    {
-        throw new NotImplementedException();
     }
     //================= END METHODS =================//
 }

@@ -10,9 +10,9 @@ namespace src.Modules.AcademicDomain.Entities.MataKuliahAggregate;
 public sealed class Materi : IEntity
 {
     // Limit constants
-    private const int _minPertemuanKeLength = 1;
+    private const int MinPertemuanKeLength = 1;
 
-    private const int _maxPertemuanKeLength = 14;
+    private const int MaxPertemuanKeLength = 16;
 
     // Properties
     public Guid Id { get; private set; }
@@ -123,8 +123,13 @@ public sealed class Materi : IEntity
 
     internal Result HapusMateri()
     {
-        IsDeleted = false;
+        IsDeleted = true;
         UpdatedAt = DateTime.UtcNow;
+
+        foreach (var tugas in _tugas)
+        {
+            tugas.HapusTugas();
+        }
         
         return Result.Success;
     }
@@ -135,15 +140,19 @@ public sealed class Materi : IEntity
     internal Result<Guid> TambahTugas(
         string judulTugas, 
         Url linkPengerjaanTugas, 
-        Url linkPengumpulanTugas)
+        Url linkPengumpulanTugas,
+        Deadline deadline)
     {
         var newTugas = TugasEntity.TambahTugas(
             judulTugas, 
             linkPengerjaanTugas, 
             linkPengumpulanTugas,
-            Id);
+            Id,
+            deadline);
         if (newTugas.IsFailure)
             return Result<Guid>.Failure(newTugas.Error);
+
+        _tugas.Add(newTugas.Value!);
 
         return Result<Guid>.Success(newTugas.Value!.Id);
     }
@@ -166,6 +175,17 @@ public sealed class Materi : IEntity
             return Result.Failure(newInfoTugas.Error);
 
         return Result.Success;
+    }
+
+    internal Result TugasJatuhTempo(Guid tugasId, Deadline deadline)
+    {
+        var tugas = _tugas.FirstOrDefault(t => t.Id == tugasId);
+        if (tugas is null)
+            return Result.Failure(TugasErrors.TugasWithIdNotFound(tugasId));
+
+        tugas.TugasJatuhTempo(deadline);
+
+        return Result.Success; 
     }
 
     internal Result HapusTugas(Guid tugasId)
@@ -218,5 +238,5 @@ public sealed class Materi : IEntity
 
     // Helper
     private static bool IsPertemuanOutOfRange(int pertemuanKu) =>
-        pertemuanKu < _minPertemuanKeLength || pertemuanKu > _maxPertemuanKeLength;
+        pertemuanKu < MinPertemuanKeLength || pertemuanKu > MaxPertemuanKeLength;
 }

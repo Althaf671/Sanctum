@@ -40,7 +40,9 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
     public DateTime? UpdatedAt { get; private set; }
 
     public DateTime CreatedAt { get; private set; }
-    
+
+    // Foreign Key
+    public Guid UserId { get; private set; }
 
     // One-to-Many with backing field
     private List<Materi> _materi = new();
@@ -63,7 +65,8 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         string ruangKuliah,
         string dosenPengampu,
         Url link,
-        WaktuKuliah waktuKuliah)
+        WaktuKuliah waktuKuliah,
+        Guid userId)
     {
         Id = Guid.NewGuid();
         KodeMataKuliah = kodeMataKuliah;
@@ -76,6 +79,7 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         IsDeleted = false;
         DosenPengampu = dosenPengampu;
         LinkFolder = link;
+        UserId = userId;
         CreatedAt = DateTime.UtcNow;
     }
 
@@ -87,17 +91,21 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         string ruangKuliah,
         string dosenPengampu,
         Url link,
-        WaktuKuliah waktuKuliah)
+        WaktuKuliah waktuKuliah,
+        Guid userId)
     {
         // pre-validate
-        var preValidation = PreValidation(
+        if (userId == Guid.Empty)
+            return Result<MataKuliah>.Failure(MataKuliahErrors.UserNotFound());
+
+        var required = ValidateRequiredFields(
             kodeMataKuliah,
             namaMataKuliah,
             sks,
             ruangKuliah,
             dosenPengampu);
-        if (preValidation.IsFailure)
-            return Result<MataKuliah>.Failure(preValidation.Error);
+        if (required.IsFailure)
+            return Result<MataKuliah>.Failure(required.Error);
 
         // validate invariant
         var validation = ValidateInvariant(
@@ -117,7 +125,8 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
                 ruangKuliah,
                 dosenPengampu,
                 link,
-                waktuKuliah
+                waktuKuliah,
+                userId
             ));
     }
 
@@ -139,14 +148,14 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         Url link)
     {
         // Pre-validate
-        var preValidation = PreValidation(
+        var required = ValidateRequiredFields(
             kodeMataKuliah, 
             namaMataKuliah, 
             sks, 
             ruangKuliah, 
             dosenPengampu);
-        if (preValidation.IsFailure)
-            return Result.Failure(preValidation.Error);
+        if (required.IsFailure)
+            return Result.Failure(required.Error);
             
         // Validate invariant
         var validation = ValidateInvariant(
@@ -174,13 +183,23 @@ public sealed partial class MataKuliah : IAggregateRoot, IEntity
         IsDeleted = true;
         UpdatedAt = DateTime.UtcNow;
 
+        foreach (var materi in _materi)
+        {
+            materi.HapusMateri();
+        }
+
+        foreach (var pertemuan in _pertemuan)
+        {
+            pertemuan.HapusJadwalPertemuan();
+        }
+
         return Result.Success;
     }
     //================= END OF METHODS =================//
 
 
     //================= MATAKULIAH BEHAVIOUR INVARIANT =================//
-    private static Result PreValidation(
+    private static Result ValidateRequiredFields(
         string kodeMataKuliah,
         string namaMataKuliah,
         int sks,

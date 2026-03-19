@@ -66,4 +66,15 @@ public sealed partial class MataKuliah
 
         return Result.Success;
     }
+
+    public Result HapusMateri(Guid materiId)
+    {
+        var materi = _materi.FirstOrDefault(m => m.Id == materiId);
+        if (materi is null)
+            return Result.Failure(MateriErrors.MateriWithIdNotFound(materiId));
+
+        materi.HapusMateri();
+
+        return Result.Success;  
+    }
 }
