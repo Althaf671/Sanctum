@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/althaf/Desktop/Sanctum/tests/Console/Console.csproj",
+      "projectUniqueName": "/Users/althaf/Desktop/Kestspace/tests/Console/Console.csproj",
       "projectName": "Console",
-      "projectPath": "/Users/althaf/Desktop/Sanctum/tests/Console/Console.csproj",
+      "projectPath": "/Users/althaf/Desktop/Kestspace/tests/Console/Console.csproj",
       "packagesPath": "/Users/althaf/.nuget/packages/",
-      "outputPath": "/Users/althaf/Desktop/Sanctum/tests/Console/obj/",
+      "outputPath": "/Users/althaf/Desktop/Kestspace/tests/Console/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/althaf/.nuget/NuGet/NuGet.Config"

@@ -6,7 +6,7 @@
 
   <Folder Name="/src/Presentation/">
     <Project Path="src/Presentation/Api/Api.csproj" />
-    <Project Path="src/Presentation/Web/Web.csproj" />
+    <Project Path="src/Presentation/Auth/Auth.csproj" />
   </Folder>
   <Folder Name="/src/Modules/" />
 

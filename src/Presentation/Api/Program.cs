@@ -54,6 +54,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
+app.MapFallbackToFile("browser/index.html");
+
 app.UseHttpsRedirection();
 app.MapControllers();
 
